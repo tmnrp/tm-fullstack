@@ -1,0 +1,11 @@
+.text-default {
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+.text-default-hover {
+  @apply text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300;
+}
+
+.text-error {
+  @apply text-sm font-semibold tracking-widest text-danger;
+}

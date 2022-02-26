@@ -1,0 +1,28 @@
+aside {
+  transition: width ease-in-out 0.4s;
+  @apply w-10;
+}
+
+aside.expanded {
+  @apply w-72;
+}
+
+aside .sidebar__expander p,
+aside .sidebar__menu-header p,
+aside .sidebar__menu-item p {
+  transition: opacity ease-in-out 0.2s;
+  @apply opacity-0 whitespace-nowrap;
+}
+
+aside.expanded .sidebar__expander p,
+aside.expanded .sidebar__menu-header p,
+aside.expanded .sidebar__menu-item p {
+  @apply opacity-100;
+}
+
+aside .sidebar__menu-item {
+  @apply pl-1;
+}
+aside.expanded .sidebar__menu-item {
+  padding-left: 0.75rem !important;
+}

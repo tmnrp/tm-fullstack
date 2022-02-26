@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+
+input,
+select {
+  @apply px-3 py-1.5;
+}
+button {
+  @apply p-2;
+}
+
+@tailwind utilities;
+
+@import "./shadows.css";
+@import "./sidebar.css";
+@import "./texts.css";
+@import "./index.css";
+
+/*
+@import "~@tmnrp/react-sidebar/dist/esm/index.css";
+*/

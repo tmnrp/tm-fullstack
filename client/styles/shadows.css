@@ -1,0 +1,7 @@
+.shadow-default {
+  @apply shadow-md dark:shadow-gray-700/30;
+}
+
+.shadow-inner-default {
+  @apply shadow-inner dark:shadow-gray-700/30;
+}
