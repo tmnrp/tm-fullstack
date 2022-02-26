@@ -34,7 +34,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       <section className="flex flex-1 overflow-auto relative">
         <Sidebar
           className={`
-          pt-4 h-full bg-surface-light-2 dark:bg-surface-dark-2
+          pt-4 h-full bg-surface-light-1 dark:bg-surface-dark-1
             ${isExpanded ? "w-10/12 sm:w-60" : ""}
             absolute sm:static
           `}
@@ -47,7 +47,9 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           />
         </Sidebar>
 
-        <main className="flex-1 overflow-hidden">{children}</main>
+        <main className="flex-1 overflow-hidden bg-surface-light-2 dark:bg-surface-dark-2">
+          {children}
+        </main>
       </section>
 
       <Footer className="flex justify-between px-2.5 py-2 shadow-inner-default" />

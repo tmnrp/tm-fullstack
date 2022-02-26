@@ -19,13 +19,13 @@ module.exports = {
         warning: "#E7A61A",
 
         //
-        "surface-light-1": "#f9fafb",
-        "surface-light-2": "#f3f4f6",
+        "surface-light-1": "#ffffff",
+        "surface-light-2": "#F8F8F8",
         "surface-light-3": "#e5e7eb",
 
         //
-        "surface-dark-1": "#111827",
-        "surface-dark-2": "#1f2937",
+        "surface-dark-1": "#000000",
+        "surface-dark-2": "#111111",
         "surface-dark-3": "#374151",
       },
     },
