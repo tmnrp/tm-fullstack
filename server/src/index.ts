@@ -1,4 +1,5 @@
 import express, { Application, Request, Response } from "express";
+import cors from "cors";
 import morgan from "morgan";
 import { CONST_CONFIG_PORT } from "./constants";
 import { protectedRouteMiddleware } from "./middleware/protectedRoute.middleware";
@@ -13,6 +14,7 @@ import { Logger } from "./utils/logger";
 const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // Loggers
 app.use(morgan("tiny"));

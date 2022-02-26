@@ -67,6 +67,9 @@ const UserDetails = () => {
         initialValues={{
           username: userDetails?.username || "",
           password: "",
+          surName: userDetails?.surName || "",
+          firstName: userDetails?.firstName || "",
+          lastName: userDetails?.lastName || "",
           rolesID: userDetails?.rolesID?._id || "",
         }}
         onSubmit={(values: IUsers) =>
@@ -122,6 +125,57 @@ const UserDetails = () => {
                 </span>
               </div>
             )}
+
+            <div className="flex flex-col space-y-1">
+              <div className="tracking-widest">Sur name</div>
+              <input
+                className="tm-input"
+                type="search"
+                name="surName"
+                placeholder="Enter sur name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.surName}
+              />
+
+              <span className="text-sm text-red-700">
+                {errors.surName && touched.surName && errors.surName}
+              </span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <div className="tracking-widest">First name</div>
+              <input
+                className="tm-input"
+                type="search"
+                name="firstName"
+                placeholder="Enter first name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.firstName}
+              />
+
+              <span className="text-sm text-red-700">
+                {errors.firstName && touched.firstName && errors.firstName}
+              </span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <div className="tracking-widest">Last name</div>
+              <input
+                className="tm-input"
+                type="search"
+                name="lastName"
+                placeholder="Enter last name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.lastName}
+              />
+
+              <span className="text-sm text-red-700">
+                {errors.lastName && touched.lastName && errors.lastName}
+              </span>
+            </div>
 
             <div className="flex flex-col space-y-1">
               <div className="tracking-widest">Role</div>

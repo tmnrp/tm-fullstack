@@ -6,10 +6,7 @@ import { Logger } from "../utils/logger";
 //
 export const getUsers = async (req: Request, res: Response) => {
   try {
-    const users = await usersModel
-      .find({ ...req.query })
-      .populate("ownersID")
-      .populate("rolesID");
+    const users = await usersModel.find({ ...req.query }).populate("rolesID");
     Logger.info(users);
     return res.status(200).json({
       status: "success",
@@ -27,10 +24,7 @@ export const getUsers = async (req: Request, res: Response) => {
 //
 export const getUserById = async (req: Request, res: Response) => {
   try {
-    const user = await usersModel
-      .findById(req.params?.id)
-      .populate("ownersID")
-      .populate("rolesID");
+    const user = await usersModel.findById(req.params?.id).populate("rolesID");
     Logger.info(user);
     return res.status(200).json({
       status: "success",

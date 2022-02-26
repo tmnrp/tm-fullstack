@@ -56,11 +56,17 @@ export const APIUsersDelete = async (
 export interface IUsers {
   username: string | undefined;
   password: string | undefined;
+  surName: string | undefined;
+  firstName: string | undefined;
+  lastName: string | undefined;
   rolesID: string | undefined;
 }
 
 //
 export interface IUsersGET {
   username: string | undefined;
+  surName: string | undefined;
+  firstName: string | undefined;
+  lastName: string | undefined;
   rolesID: IRoles;
 }

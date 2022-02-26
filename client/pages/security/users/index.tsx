@@ -82,10 +82,40 @@ const getColumns = (
       dataIndex: "rolesID",
       label: "Role",
       dataLabel: "Role",
-      columnHeaderAttributes: {},
+      columnHeaderAttributes: {
+        className: "w-24",
+      },
       columnBodyAttributes: {},
       renderer: ({ record }: { record: { rolesID: IRoles } }) =>
         record?.rolesID?.name,
+    },
+    {
+      id: "surName",
+      dataIndex: "surName",
+      label: "Sur name",
+      dataLabel: "Sur name",
+      columnHeaderAttributes: {
+        className: "w-24",
+      },
+      columnBodyAttributes: {},
+    },
+    {
+      id: "firstName",
+      dataIndex: "firstName",
+      label: "First name",
+      dataLabel: "First name",
+      columnHeaderAttributes: {
+        className: "w-24",
+      },
+      columnBodyAttributes: {},
+    },
+    {
+      id: "lastName",
+      dataIndex: "lastName",
+      label: "Last name",
+      dataLabel: "Last name",
+      columnHeaderAttributes: {},
+      columnBodyAttributes: {},
     },
     {
       id: "actions",

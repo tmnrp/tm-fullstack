@@ -70,7 +70,7 @@ const getColumns = (
     {
       id: "name",
       dataIndex: "name",
-      label: "name",
+      label: "Name",
       dataLabel: "name",
       columnHeaderAttributes: {
         className: "w-24",
