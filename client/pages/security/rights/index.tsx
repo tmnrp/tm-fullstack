@@ -1,22 +1,21 @@
-import { NextRouter, useRouter } from "next/router";
-import { useContext, useEffect, useRef, useState } from "react";
-import { ICrumb, useBreadcrumbs } from "@tmnrp/react-breadcrumbs";
-import { CONST_PAGES, CONST_PAGE_MODE } from "../../../constants";
+import { useBreadcrumbs, ICrumb } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
-import { useZustantStoreBreadcrumbRef } from "../../../utils/store";
-import {
-  ITableColumns,
-  ITableMethods,
-  Table,
-} from "../../../components/table/Table";
+import { NextRouter, useRouter } from "next/router";
+import { useEffect, useRef, useState } from "react";
 import { AxiosRequest } from "../../../api";
+import { APIRightsDelete, APIRightsGet } from "../../../api/security/APIRights";
 import { Button } from "../../../components/button/Button";
 import { PageWrap } from "../../../components/PageWrap";
-import { APIUsersDelete, APIUsersGet } from "../../../api/security/APIUsers";
-import { IRoles } from "../../../api/security/APIRoles";
+import { CONST_PAGES, CONST_PAGE_MODE } from "../../../constants";
+import { useZustantStoreBreadcrumbRef } from "../../../utils/store";
+import {
+  ITableMethods,
+  Table,
+  ITableColumns,
+} from "../../../components/table/Table";
 
 //
-const Users = () => {
+const Rights = () => {
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
@@ -27,7 +26,7 @@ const Users = () => {
   //
   const [reloadCounter, setReloadCounter] = useState(0);
   useEffect(() => {
-    APIUsersGet((res) => {
+    APIRightsGet((res) => {
       !AxiosRequest.isAxiosError(res) &&
         ref.current?.setData(res.data.items || []);
     });
@@ -41,7 +40,7 @@ const Users = () => {
         <Button.Add
           onClick={() =>
             router.push(
-              `${CONST_PAGES.SECURITY.USERS.PATH}/${CONST_PAGE_MODE.NEW}`
+              `${CONST_PAGES.SECURITY.RIGHTS.PATH}/${CONST_PAGE_MODE.NEW}`
             )
           }
         />
@@ -59,7 +58,7 @@ const Users = () => {
     </PageWrap>
   );
 };
-export default Users;
+export default Rights;
 
 //
 const getColumns = (
@@ -68,24 +67,12 @@ const getColumns = (
 ): Array<ITableColumns> => {
   return [
     {
-      id: "username",
-      dataIndex: "username",
-      label: "Username",
-      dataLabel: "Username",
-      columnHeaderAttributes: {
-        className: "w-24",
-      },
-      columnBodyAttributes: {},
-    },
-    {
-      id: "rolesID",
-      dataIndex: "rolesID",
-      label: "Role",
-      dataLabel: "Role",
+      id: "name",
+      dataIndex: "name",
+      label: "Name",
+      dataLabel: "Name",
       columnHeaderAttributes: {},
       columnBodyAttributes: {},
-      renderer: ({ record }: { record: { rolesID: IRoles } }) =>
-        record?.rolesID?.name,
     },
     {
       id: "actions",
@@ -99,13 +86,15 @@ const getColumns = (
           <div className="flex justify-center space-x-2">
             <Button.EditIcon
               onClick={() =>
-                router.push(`${CONST_PAGES.SECURITY.USERS.PATH}/${record?._id}`)
+                router.push(
+                  `${CONST_PAGES.SECURITY.RIGHTS.PATH}/${record?._id}`
+                )
               }
             />
 
             <Button.DeleteIcon
               onClick={() => {
-                APIUsersDelete(record?._id, (res) => {
+                APIRightsDelete(record?._id, (res) => {
                   !AxiosRequest.isAxiosError(res) &&
                     setReloadCounter((reloadCounter) => ++reloadCounter);
                 });
@@ -126,10 +115,10 @@ const crumbs: Array<ICrumb> = [
   },
   {
     icon: <GoogleMaterialIcons iconName="interests" />,
-    label: "Google material icons",
+    label: "Roles",
   },
   {
     icon: <GoogleMaterialIcons iconName="view_list" />,
-    label: "Examples",
+    label: "Details",
   },
 ];

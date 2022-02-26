@@ -20,7 +20,7 @@ interface IGlobalState {
 
 //
 const useZustantStore = create<IGlobalState>((set: any) => ({
-  isExpanded: false,
+  isExpanded: true,
   toggle: () =>
     set((state: IGlobalState) => ({ isExpanded: !state.isExpanded })),
 

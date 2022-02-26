@@ -26,7 +26,7 @@ module.exports = {
         //
         "surface-dark-1": "#000000",
         "surface-dark-2": "#111111",
-        "surface-dark-3": "#374151",
+        "surface-dark-3": "#888888",
       },
     },
   },

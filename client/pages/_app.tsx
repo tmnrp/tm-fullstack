@@ -44,16 +44,37 @@ export const getExplorerContent = ({
   router: NextRouter;
 }): Array<IExplorerItem> => [
   {
-    icon: <GoogleMaterialIcons iconName="manage_accounts" />,
+    icon: (
+      <GoogleMaterialIcons className="pr-2" iconName="admin_panel_settings" />
+    ),
     label: "Manage",
     clickable: false,
+    itemProps: {
+      className: "pb-1.5",
+    },
     items: [
       {
-        label: "Users",
-        icon: <GoogleMaterialIcons iconName="people" />,
+        label: "Roles",
+        icon: <GoogleMaterialIcons className="pr-2" iconName="people" />,
         itemProps: {
-          className: "hover:text-primary cursor-pointer",
+          className: "hover:text-primary cursor-pointer pb-1",
+          onClick: () => router.push(CONST_PAGES.SECURITY.ROLES.PATH),
+        },
+      },
+      {
+        label: "Users",
+        icon: <GoogleMaterialIcons className="pr-2" iconName="badge" />,
+        itemProps: {
+          className: "hover:text-primary cursor-pointer pb-1",
           onClick: () => router.push(CONST_PAGES.SECURITY.USERS.PATH),
+        },
+      },
+      {
+        label: "Righs",
+        icon: <GoogleMaterialIcons className="pr-2" iconName="checklist_rtl" />,
+        itemProps: {
+          className: "hover:text-primary cursor-pointer pb-1",
+          onClick: () => router.push(CONST_PAGES.SECURITY.RIGHTS.PATH),
         },
       },
     ],

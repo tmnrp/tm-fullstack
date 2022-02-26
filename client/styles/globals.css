@@ -5,15 +5,14 @@ input,
 select {
   @apply px-3 py-1.5;
 }
-button {
-  @apply p-2;
-}
 
 @tailwind utilities;
 
 @import "./shadows.css";
 @import "./sidebar.css";
 @import "./texts.css";
+@import "./buttons.css";
+@import "./table.css";
 @import "./index.css";
 
 /*
