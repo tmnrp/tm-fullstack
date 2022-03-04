@@ -260,10 +260,10 @@ const crumbs: Array<ICrumb> = [
   },
   {
     icon: <GoogleMaterialIcons iconName="interests" />,
-    label: "Google material icons",
+    label: "Users",
   },
   {
     icon: <GoogleMaterialIcons iconName="view_list" />,
-    label: "Examples",
+    label: "Details",
   },
 ];

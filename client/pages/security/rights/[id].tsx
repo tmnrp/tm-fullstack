@@ -138,7 +138,7 @@ const crumbs: Array<ICrumb> = [
   },
   {
     icon: <GoogleMaterialIcons iconName="interests" />,
-    label: "Roles",
+    label: "Rights",
   },
   {
     icon: <GoogleMaterialIcons iconName="view_list" />,

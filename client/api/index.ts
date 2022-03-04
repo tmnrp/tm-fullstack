@@ -41,4 +41,4 @@ AxiosRequest.isAxiosError = (res: any) => axios.isAxiosError(res);
 AxiosRequest.BASE_URL =
   typeof window !== "undefined" && window.location.hostname === "localhost"
     ? "http://localhost:3001/"
-    : "https://tm-bst.herokuapp.com/";
+    : "https://tm-fullstack.herokuapp.com/";

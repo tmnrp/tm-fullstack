@@ -34,8 +34,8 @@ Button.Add = (props: IButton) => (
 
 //
 Button.EditIcon = (props: IButton) => (
-  <Button {...props}>
-    <GoogleMaterialIcons className="primary" iconName="edit" />
+  <Button className="info outlined" {...props}>
+    <GoogleMaterialIcons iconName="edit" />
   </Button>
 );
 
@@ -71,8 +71,8 @@ Button.Delete = (props: IButton) => (
 
 //
 Button.DeleteIcon = (props: IButton) => (
-  <Button {...props}>
-    <GoogleMaterialIcons className="danger" iconName="delete" />
+  <Button className="danger outlined" {...props}>
+    <GoogleMaterialIcons iconName="delete" />
   </Button>
 );
 

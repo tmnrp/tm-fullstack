@@ -1,6 +1,6 @@
-# tm-bst
+# tm-fullstack
 
-TM Blood Sugar Tracker
+TM Full stack
 
 # setup
 
@@ -29,5 +29,5 @@ npm i mongoose
 ### heroku deployment subtree
 
 npx heroku login
-npx heroku git:remote -a tm-bst
+npx heroku git:remote -a tm-fullstack
 git subtree push --prefix server/ heroku main

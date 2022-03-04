@@ -1,5 +1,5 @@
 //
-export const CONST_LOGO = "B.S.T.";
+export const CONST_LOGO = "F.Stack";
 
 //
 export const CONST_PAGE_MODE = {

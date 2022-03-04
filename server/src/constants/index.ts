@@ -2,7 +2,7 @@
 export const CONST_CONFIG_PORT = 3001;
 
 //
-export const CONST_CONFIG_DB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PWD}@tm-cluster.77ngt.mongodb.net/tm_bst_db?retryWrites=true&w=majority`;
+export const CONST_CONFIG_DB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PWD}@tm-cluster.77ngt.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 //
 export const CONST_CONFIG_PRIVATE_KEY = `-----BEGIN RSA PRIVATE KEY-----
