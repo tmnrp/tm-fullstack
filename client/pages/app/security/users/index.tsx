@@ -14,11 +14,9 @@ import { Button } from "../../../../components/button/Button";
 import { PageWrap } from "../../../../components/PageWrap";
 import { APIUsersDelete, APIUsersGet } from "../../../../api/security/APIUsers";
 import { IRoles } from "../../../../api/security/APIRoles";
-import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const Users = () => {
-  utilBSIsUserLoggedIn();
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 

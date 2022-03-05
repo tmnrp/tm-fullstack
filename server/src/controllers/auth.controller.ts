@@ -3,7 +3,12 @@ import { Request, Response } from "express";
 import { IUsers, usersModel } from "../models/users.model";
 import { bcryptCompare, bcryptHash } from "../utils/bcrypt";
 import { Logger } from "../utils/logger";
-import { CONST_CONFIG_PRIVATE_KEY } from "../constants";
+import {
+  CONST_CONFIG_ACCESS_TOKEN_DURATION,
+  CONST_CONFIG_PRIVATE_KEY,
+  CONST_CONFIG_PUBLIC_KEY,
+  CONST_CONFIG_REFRESH_TOKEN_DURATION,
+} from "../constants";
 
 //
 export const postLogin = async (req: Request, res: Response) => {
@@ -23,11 +28,11 @@ export const postLogin = async (req: Request, res: Response) => {
       if (isPasswordValid) {
         const accessToken = jwt.sign(user, CONST_CONFIG_PRIVATE_KEY, {
           algorithm: "RS256",
-          expiresIn: "30m",
+          expiresIn: CONST_CONFIG_ACCESS_TOKEN_DURATION,
         });
-        console.log("accessToken", accessToken);
-        const refreshToken = jwt.sign({}, accessToken, {
-          expiresIn: "5h",
+        const refreshToken = jwt.sign({}, CONST_CONFIG_PRIVATE_KEY, {
+          algorithm: "RS256",
+          expiresIn: CONST_CONFIG_REFRESH_TOKEN_DURATION,
         });
 
         //
@@ -48,6 +53,38 @@ export const postLogin = async (req: Request, res: Response) => {
     message: "Invalid credentials",
   });
 };
+
+//
+export const postRefreshToken = async (req: Request, res: Response) => {
+  try {
+    const { accessToken, refreshToken } = (req.body as IPostRefreshToken) || {};
+    jwt.verify(refreshToken, CONST_CONFIG_PUBLIC_KEY);
+
+    //
+    const accessTokenInfo: any = jwt.decode(accessToken);
+    const newAccessToken = await generateAccessTokenByUserId(
+      accessTokenInfo?._id
+    );
+
+    //
+    return res.status(200).json({
+      status: "success",
+      newAccessToken,
+    });
+  } catch (error: any) {
+    Logger.error(error);
+  }
+
+  //
+  return res.status(401).json({
+    status: "failed",
+    message: "Authentication required",
+  });
+};
+interface IPostRefreshToken {
+  accessToken: string;
+  refreshToken: string;
+}
 
 //
 export const insertSuper = (req: Request, res: Response) => {
@@ -84,8 +121,10 @@ export const generateAccessTokenByUserId = async (userID: string) => {
     if (user) {
       const accessToken = jwt.sign(user.toJSON(), CONST_CONFIG_PRIVATE_KEY, {
         algorithm: "RS256",
-        expiresIn: "30s",
+        expiresIn: CONST_CONFIG_ACCESS_TOKEN_DURATION,
       });
+      console.log("new accessToken", accessToken);
+
       return accessToken;
     }
   } catch (error: any) {

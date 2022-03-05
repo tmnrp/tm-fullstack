@@ -18,11 +18,9 @@ import { Button } from "../../../../components/button/Button";
 import { PageWrap } from "../../../../components/PageWrap";
 import { CONST_PAGE_MODE, CONST_PAGES } from "../../../../constants";
 import { useZustantStoreBreadcrumbRef } from "../../../../utils/store";
-import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const UserDetails = () => {
-  utilBSIsUserLoggedIn();
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
