@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import { APIAuth } from "../../../api/security/APIAuth";
 import { useRouter } from "next/router";
 import { CONST_PAGES } from "../../../constants";
+import { AxiosRequest } from "../../../api";
 
 //
 const Login = () => {
@@ -16,12 +17,7 @@ const Login = () => {
         credPwd: values.password,
       });
 
-      //
-      res?.data?.items &&
-        localStorage.setItem("tokens", JSON.stringify(res?.data?.items));
-
-      //
-      router.push(CONST_PAGES.APP.HOME.PATH);
+      !AxiosRequest.isAxiosError(res) && router.push(CONST_PAGES.APP.HOME.PATH);
     },
     [router]
   );

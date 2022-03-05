@@ -18,11 +18,9 @@ import {
   APIRolesPost,
   APIRolesPut,
 } from "../../../../api/security/APIRoles";
-import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const RoleDetails = () => {
-  utilBSIsUserLoggedIn();
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 

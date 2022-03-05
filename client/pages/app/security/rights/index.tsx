@@ -16,11 +16,9 @@ import {
   Table,
   ITableColumns,
 } from "../../../../components/table/Table";
-import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const Rights = () => {
-  utilBSIsUserLoggedIn();
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 

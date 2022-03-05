@@ -24,7 +24,9 @@ export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
   request.interceptors.response.use(
     (config) => config,
     (error) => {
-      if (error?.response?.status === 401) {
+      const { status } = error?.response;
+      console.error(error);
+      if (status === 401) {
         window.location.href = `${window.location.origin}${CONST_PAGES.AUTH.LOGIN.PATH}`;
         toast.error(error?.response?.data?.message);
       } else {

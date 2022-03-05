@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { APIAuth } from "../api/security/APIAuth";
 import { CONST_CONFIG_PUBLIC_KEY, CONST_PAGES } from "../constants";
 
 //
@@ -23,15 +24,28 @@ export const utilBSGetTokens = (): {
   JSON.parse(localStorage.getItem(CONST_STORAGE["tokens"]) || "{}");
 
 //
-export const utilBSIsUserLoggedIn = () => {
+export const utilBSIsUserLoggedIn = async () => {
   const { accessToken, refreshToken } = utilBSGetTokens();
   try {
+    //
     jwt.verify(accessToken, CONST_CONFIG_PUBLIC_KEY);
   } catch (error: any) {
     try {
-      jwt.verify(refreshToken, accessToken);
+      //
+      jwt.verify(refreshToken, CONST_CONFIG_PUBLIC_KEY);
+      await APIAuth.refreshToken();
     } catch (error: any) {
+      console.error(error);
       signOutUser();
     }
   }
+};
+
+//
+export const utilBSSetTokens = (tokens: {
+  accessToken: string;
+  refreshToken: string;
+}) => {
+  typeof localStorage !== "undefined" &&
+    localStorage.setItem("tokens", JSON.stringify(tokens));
 };

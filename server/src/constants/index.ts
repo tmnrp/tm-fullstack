@@ -30,8 +30,14 @@ tuf0GGxFTE+Kk0zrFwIDAQAB
 -----END PUBLIC KEY-----`;
 
 //
+export const CONST_CONFIG_ACCESS_TOKEN_DURATION = "30";
+export const CONST_CONFIG_REFRESH_TOKEN_DURATION = "3h";
+
+//
 export const CONST_MODEL_NAMES = {
   rights: "rights",
   roles: "roles",
   users: "users",
 };
+
+//
