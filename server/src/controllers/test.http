@@ -12,4 +12,4 @@ content-type: application/json
 
 GET http://localhost:3001/api/users
 Authorization: bearer asdf
-x-refresh-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDY0ODEwMzMsImV4cCI6MTY0NjQ4MTA5M30.rhMSneMp6PcERc10Pjvmo3XdrIMyIsoULWX7bLM8gLk
+x-refresh-token: sample
