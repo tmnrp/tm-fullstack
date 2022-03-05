@@ -12,4 +12,4 @@ content-type: application/json
 
 GET http://localhost:3001/api/users
 Authorization: bearer asdf
-x-refresh-token: sample
+x-refresh-token: 
