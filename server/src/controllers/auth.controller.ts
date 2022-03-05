@@ -23,10 +23,10 @@ export const postLogin = async (req: Request, res: Response) => {
       if (isPasswordValid) {
         const accessToken = jwt.sign(user, CONST_CONFIG_PRIVATE_KEY, {
           algorithm: "RS256",
-          expiresIn: "5m",
+          expiresIn: "30m",
         });
         const refreshToken = jwt.sign({}, accessToken, {
-          expiresIn: "10m",
+          expiresIn: "5h",
         });
 
         //
@@ -74,4 +74,23 @@ export const insertSuper = (req: Request, res: Response) => {
       });
     }
   });
+};
+
+//
+export const generateAccessTokenByUserId = async (userID: string) => {
+  try {
+    const user = await usersModel.findById(userID);
+    if (user) {
+      const accessToken = jwt.sign(user.toJSON(), CONST_CONFIG_PRIVATE_KEY, {
+        algorithm: "RS256",
+        expiresIn: "30s",
+      });
+      return accessToken;
+    }
+  } catch (error: any) {
+    Logger.error(error);
+  }
+
+  //
+  return "";
 };
