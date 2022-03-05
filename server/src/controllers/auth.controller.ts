@@ -1,65 +1,53 @@
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { IUsers, usersModel } from "../models/users.model";
-import { rolesModel } from "../models/roles.model";
 import { bcryptCompare, bcryptHash } from "../utils/bcrypt";
 import { Logger } from "../utils/logger";
 import { CONST_CONFIG_PRIVATE_KEY } from "../constants";
 
 //
 export const postLogin = async (req: Request, res: Response) => {
-  const { username, password } = (req.body as IUsers) || {};
-
   try {
-    const users = await usersModel.find({ username });
+    const { username, password: reqPwd } = (req.body as IUsers) || {};
+    const users = await usersModel
+      .find({ username })
+      .lean()
+      .populate("rolesID");
+
     //
-    if (users.length > 0 && users[0].password && password) {
-      const isPasswordValid = await bcryptCompare(password, users[0].password);
+    if (users.length > 0) {
+      const { password = "", ...user } = users[0];
+      const isPasswordValid = await bcryptCompare(reqPwd, password);
 
+      //
       if (isPasswordValid) {
-        const user = users[0];
+        const accessToken = jwt.sign(user, CONST_CONFIG_PRIVATE_KEY, {
+          algorithm: "RS256",
+          expiresIn: "5m",
+        });
+        const refreshToken = jwt.sign({}, accessToken, {
+          expiresIn: "10m",
+        });
 
         //
-        const userRoles =
-          user._id && (await rolesModel.find({ userID: user._id.toString() }));
-
-        //
-        let tokenDetails = {};
-        tokenDetails = userRoles
-          ? { ...tokenDetails, userRoles: userRoles }
-          : tokenDetails;
-        const accessToken = generateAccessToken(tokenDetails);
-
-        //
+        Logger.info(`Login success ${user._id}`);
         return res.status(200).json({
           status: "success",
-          accessToken,
+          message: { accessToken, refreshToken },
         });
-      } else Logger.error("Wrong password");
+      }
     }
-
-    //
-    return res.status(404).json({
-      status: "success",
-      message: `Invalid credentials`,
-    });
-  } catch (error) {
+  } catch (error: any) {
     Logger.error(error);
-    return res.status(500).json({
-      success: "failed",
-      message: "Invalid credentials",
-    });
   }
-};
 
-//
-const generateAccessToken = (payload: any) => {
-  return jwt.sign(payload, CONST_CONFIG_PRIVATE_KEY, {
-    algorithm: "RS256",
+  //
+  return res.status(401).json({
+    status: "failed",
+    message: "Invalid credentials",
   });
 };
 
-//
 //
 export const insertSuper = (req: Request, res: Response) => {
   const { username, password } = { username: "root", password: "root" };

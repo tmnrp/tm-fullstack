@@ -9,6 +9,7 @@ import { RolesRouter } from "./router/roles.router";
 import { UserRouter } from "./router/users.router";
 import { connectDB } from "./utils/db";
 import { Logger } from "./utils/logger";
+import { AuthRouter } from "./router/auth.router";
 
 // Main
 const app: Application = express();
@@ -24,6 +25,7 @@ connectDB();
 
 // Routers
 app.use(protectedRouteMiddleware);
+app.use(COSNT_ROUTES.AUTH, AuthRouter);
 app.use(COSNT_ROUTES.RIGHTS, RightsRouter);
 app.use(COSNT_ROUTES.ROLES, RolesRouter);
 app.use(COSNT_ROUTES.USERS, UserRouter);
