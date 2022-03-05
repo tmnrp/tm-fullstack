@@ -2,21 +2,23 @@ import { ICrumb, useBreadcrumbs } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { AxiosRequest } from "../../../api";
-import { IRights } from "../../../api/security/APIRights";
-import { APIRolesDelete, APIRolesGet } from "../../../api/security/APIRoles";
-import { Button } from "../../../components/button/Button";
-import { PageWrap } from "../../../components/PageWrap";
-import { CONST_PAGES, CONST_PAGE_MODE } from "../../../constants";
-import { useZustantStoreBreadcrumbRef } from "../../../utils/store";
+import { AxiosRequest } from "../../../../api";
+import { IRights } from "../../../../api/security/APIRights";
+import { APIRolesDelete, APIRolesGet } from "../../../../api/security/APIRoles";
+import { Button } from "../../../../components/button/Button";
+import { PageWrap } from "../../../../components/PageWrap";
+import { CONST_PAGES, CONST_PAGE_MODE } from "../../../../constants";
+import { useZustantStoreBreadcrumbRef } from "../../../../utils/store";
 import {
   ITableMethods,
   Table,
   ITableColumns,
-} from "../../../components/table/Table";
+} from "../../../../components/table/Table";
+import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const Roles = () => {
+  utilBSIsUserLoggedIn();
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
@@ -41,7 +43,7 @@ const Roles = () => {
         <Button.Add
           onClick={() =>
             router.push(
-              `${CONST_PAGES.SECURITY.ROLES.PATH}/${CONST_PAGE_MODE.NEW}`
+              `${CONST_PAGES.APP.SECURITY.ROLES.PATH}/${CONST_PAGE_MODE.NEW}`
             )
           }
         />
@@ -105,7 +107,9 @@ const getColumns = (
           <div className="flex justify-center space-x-2">
             <Button.EditIcon
               onClick={() =>
-                router.push(`${CONST_PAGES.SECURITY.ROLES.PATH}/${record?._id}`)
+                router.push(
+                  `${CONST_PAGES.APP.SECURITY.ROLES.PATH}/${record?._id}`
+                )
               }
             />
 

@@ -95,10 +95,12 @@ const Logo = () => {
       className={`
         text-xl font-extrabold tracking-widest cursor-pointer dark:text-gray-300
         ${
-          router.pathname === CONST_PAGES.LANDING.PATH ? "text-emerald-600" : ""
+          router.pathname === CONST_PAGES.APP.HOME.PATH
+            ? "text-emerald-600"
+            : ""
         }
       `}
-      onClick={() => router.push(CONST_PAGES.LANDING.PATH)}
+      onClick={() => router.push(CONST_PAGES.APP.HOME.PATH)}
     >
       {CONST_LOGO}
     </div>

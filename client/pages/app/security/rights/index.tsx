@@ -2,20 +2,25 @@ import { useBreadcrumbs, ICrumb } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { AxiosRequest } from "../../../api";
-import { APIRightsDelete, APIRightsGet } from "../../../api/security/APIRights";
-import { Button } from "../../../components/button/Button";
-import { PageWrap } from "../../../components/PageWrap";
-import { CONST_PAGES, CONST_PAGE_MODE } from "../../../constants";
-import { useZustantStoreBreadcrumbRef } from "../../../utils/store";
+import { AxiosRequest } from "../../../../api";
+import {
+  APIRightsDelete,
+  APIRightsGet,
+} from "../../../../api/security/APIRights";
+import { Button } from "../../../../components/button/Button";
+import { PageWrap } from "../../../../components/PageWrap";
+import { CONST_PAGES, CONST_PAGE_MODE } from "../../../../constants";
+import { useZustantStoreBreadcrumbRef } from "../../../../utils/store";
 import {
   ITableMethods,
   Table,
   ITableColumns,
-} from "../../../components/table/Table";
+} from "../../../../components/table/Table";
+import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const Rights = () => {
+  utilBSIsUserLoggedIn();
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
@@ -40,7 +45,7 @@ const Rights = () => {
         <Button.Add
           onClick={() =>
             router.push(
-              `${CONST_PAGES.SECURITY.RIGHTS.PATH}/${CONST_PAGE_MODE.NEW}`
+              `${CONST_PAGES.APP.SECURITY.RIGHTS.PATH}/${CONST_PAGE_MODE.NEW}`
             )
           }
         />
@@ -87,7 +92,7 @@ const getColumns = (
             <Button.EditIcon
               onClick={() =>
                 router.push(
-                  `${CONST_PAGES.SECURITY.RIGHTS.PATH}/${record?._id}`
+                  `${CONST_PAGES.APP.SECURITY.RIGHTS.PATH}/${record?._id}`
                 )
               }
             />

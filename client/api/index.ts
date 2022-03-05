@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { getAccessToken } from "../utils";
+import { CONST_PAGES } from "../constants";
+import { utilBSGetTokens } from "../utils/browserStorage";
 
 //
 export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
@@ -10,7 +11,7 @@ export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
 
   request.interceptors.request.use(
     (config) => {
-      const accessToken = getAccessToken();
+      const { accessToken } = utilBSGetTokens();
       config.headers = {
         Authorization: `Bearer ${accessToken}`,
       };
@@ -24,7 +25,7 @@ export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
     (config) => config,
     (error) => {
       if (error?.response?.status === 401) {
-        window.location.href = window.location.origin;
+        window.location.href = `${window.location.origin}${CONST_PAGES.AUTH.LOGIN.PATH}`;
         toast.error(error?.response?.data?.message);
       } else {
         toast.error(

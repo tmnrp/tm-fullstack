@@ -5,22 +5,24 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { ICrumb, useBreadcrumbs } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
-import { AxiosRequest } from "../../../api";
-import { APIRolesGet, IRoles } from "../../../api/security/APIRoles";
+import { AxiosRequest } from "../../../../api";
+import { IRoles, APIRolesGet } from "../../../../api/security/APIRoles";
 import {
   IUsersGET,
-  IUsers,
   APIUsersGetById,
+  IUsers,
   APIUsersPost,
   APIUsersPut,
-} from "../../../api/security/APIUsers";
-import { Button } from "../../../components/button/Button";
-import { PageWrap } from "../../../components/PageWrap";
-import { CONST_PAGES, CONST_PAGE_MODE } from "../../../constants";
-import { useZustantStoreBreadcrumbRef } from "../../../utils/store";
+} from "../../../../api/security/APIUsers";
+import { Button } from "../../../../components/button/Button";
+import { PageWrap } from "../../../../components/PageWrap";
+import { CONST_PAGE_MODE, CONST_PAGES } from "../../../../constants";
+import { useZustantStoreBreadcrumbRef } from "../../../../utils/store";
+import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const UserDetails = () => {
+  utilBSIsUserLoggedIn();
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
@@ -55,7 +57,7 @@ const UserDetails = () => {
       actions={
         <div className="flex space-x-2">
           <Button.Cancel
-            onClick={() => router.push(CONST_PAGES.SECURITY.USERS.PATH)}
+            onClick={() => router.push(CONST_PAGES.APP.SECURITY.USERS.PATH)}
           />
 
           <Button.Save form="form" type="submit" />
@@ -227,7 +229,7 @@ const submitHandler = ({
     APIUsersPost({ ...values }, (res) => {
       if (!AxiosRequest.isAxiosError(res)) {
         toast.success(`Successfully created user ${values.username}`);
-        router.push(CONST_PAGES.SECURITY.USERS.PATH);
+        router.push(CONST_PAGES.APP.SECURITY.USERS.PATH);
       }
     });
   } else {
@@ -235,7 +237,7 @@ const submitHandler = ({
       APIUsersPut(id, values, (res) => {
         if (!AxiosRequest.isAxiosError(res)) {
           toast.success(`Successfully updated user ${values.username}`);
-          router.push(CONST_PAGES.SECURITY.USERS.PATH);
+          router.push(CONST_PAGES.APP.SECURITY.USERS.PATH);
         }
       });
   }
