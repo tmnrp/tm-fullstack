@@ -31,13 +31,6 @@ app.use(COSNT_ROUTES.ROLES, RolesRouter);
 app.use(COSNT_ROUTES.USERS, UserRouter);
 
 //
-app.get("/", (req: Request, res: Response) =>
-  res.status(200).send({
-    message: `${process.env.DB_USER} : ${process.env.DB_PWD}`,
-  })
-);
-
-//
 app.listen(process.env.PORT || CONST_CONFIG_PORT, () => {
   Logger.info(`Server running on port ${CONST_CONFIG_PORT}`);
 });
