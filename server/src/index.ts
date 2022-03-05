@@ -10,6 +10,7 @@ import { UserRouter } from "./router/users.router";
 import { connectDB } from "./utils/db";
 import { Logger } from "./utils/logger";
 import { AuthRouter } from "./router/auth.router";
+import { injectNewAccessTokenMiddleware } from "./middleware/injectNewAccessToken.middleware";
 
 // Main
 const app: Application = express();
@@ -24,8 +25,9 @@ app.use(morgan("tiny"));
 connectDB();
 
 // Routers
-app.use(protectedRouteMiddleware);
 app.use(COSNT_ROUTES.AUTH, AuthRouter);
+app.use(protectedRouteMiddleware);
+app.use(injectNewAccessTokenMiddleware);
 app.use(COSNT_ROUTES.RIGHTS, RightsRouter);
 app.use(COSNT_ROUTES.ROLES, RolesRouter);
 app.use(COSNT_ROUTES.USERS, UserRouter);
