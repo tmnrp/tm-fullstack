@@ -21,11 +21,19 @@ export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
 
   // Add a response interceptor
   request.interceptors.response.use(
-    (response) => response,
+    (config) => config,
     (error) => {
-      toast.error(
-        error?.response?.data?.message || "Error, Please contact administrator"
-      );
+      if (error?.response?.status === 401) {
+        window.location.href = window.location.origin;
+        toast.error(error?.response?.data?.message);
+      } else {
+        toast.error(
+          error?.response?.data?.message ||
+            "Error, Please contact administrator"
+        );
+      }
+
+      //
       return error;
     }
   );
