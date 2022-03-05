@@ -5,20 +5,22 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useBreadcrumbs, ICrumb } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
-import { AxiosRequest } from "../../../api";
+import { AxiosRequest } from "../../../../api";
 import {
   APIRightsGetById,
   APIRightsPost,
   APIRightsPut,
   IRights,
-} from "../../../api/security/APIRights";
-import { Button } from "../../../components/button/Button";
-import { PageWrap } from "../../../components/PageWrap";
-import { CONST_PAGE_MODE, CONST_PAGES } from "../../../constants";
-import { useZustantStoreBreadcrumbRef } from "../../../utils/store";
+} from "../../../../api/security/APIRights";
+import { Button } from "../../../../components/button/Button";
+import { PageWrap } from "../../../../components/PageWrap";
+import { CONST_PAGE_MODE, CONST_PAGES } from "../../../../constants";
+import { useZustantStoreBreadcrumbRef } from "../../../../utils/store";
+import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const RightDetails = () => {
+  utilBSIsUserLoggedIn();
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
@@ -45,7 +47,7 @@ const RightDetails = () => {
       actions={
         <div className="flex space-x-2">
           <Button.Cancel
-            onClick={() => router.push(CONST_PAGES.SECURITY.RIGHTS.PATH)}
+            onClick={() => router.push(CONST_PAGES.APP.SECURITY.RIGHTS.PATH)}
           />
 
           <Button.Save form="form" type="submit" />
@@ -111,7 +113,7 @@ const submitHandler = ({
     APIRightsPost({ ...values }, (res) => {
       if (!AxiosRequest.isAxiosError(res)) {
         toast.success(`Successfully created right ${values.name}`);
-        router.push(CONST_PAGES.SECURITY.RIGHTS.PATH);
+        router.push(CONST_PAGES.APP.SECURITY.RIGHTS.PATH);
       }
     });
   } else {
@@ -119,7 +121,7 @@ const submitHandler = ({
       APIRightsPut(id, values, (res) => {
         if (!AxiosRequest.isAxiosError(res)) {
           toast.success(`Successfully updated right ${values.name}`);
-          router.push(CONST_PAGES.SECURITY.RIGHTS.PATH);
+          router.push(CONST_PAGES.APP.SECURITY.RIGHTS.PATH);
         }
       });
   }

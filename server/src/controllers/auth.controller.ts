@@ -25,6 +25,7 @@ export const postLogin = async (req: Request, res: Response) => {
           algorithm: "RS256",
           expiresIn: "30m",
         });
+        console.log("accessToken", accessToken);
         const refreshToken = jwt.sign({}, accessToken, {
           expiresIn: "5h",
         });
@@ -33,7 +34,7 @@ export const postLogin = async (req: Request, res: Response) => {
         Logger.info(`Login success ${user._id}`);
         return res.status(200).json({
           status: "success",
-          message: { accessToken, refreshToken },
+          items: { accessToken, refreshToken },
         });
       }
     }

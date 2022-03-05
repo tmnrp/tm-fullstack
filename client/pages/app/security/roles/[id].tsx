@@ -5,22 +5,24 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { ICrumb, useBreadcrumbs } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
-import { AxiosRequest } from "../../../api";
-import { APIRightsGet, IRights } from "../../../api/security/APIRights";
-import { Button } from "../../../components/button/Button";
-import { PageWrap } from "../../../components/PageWrap";
-import { CONST_PAGES, CONST_PAGE_MODE } from "../../../constants";
-import { useZustantStoreBreadcrumbRef } from "../../../utils/store";
+import { AxiosRequest } from "../../../../api";
+import { APIRightsGet, IRights } from "../../../../api/security/APIRights";
+import { Button } from "../../../../components/button/Button";
+import { PageWrap } from "../../../../components/PageWrap";
+import { CONST_PAGES, CONST_PAGE_MODE } from "../../../../constants";
+import { useZustantStoreBreadcrumbRef } from "../../../../utils/store";
 import {
   IRolesGET,
   IRoles,
   APIRolesGetById,
   APIRolesPost,
   APIRolesPut,
-} from "../../../api/security/APIRoles";
+} from "../../../../api/security/APIRoles";
+import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const RoleDetails = () => {
+  utilBSIsUserLoggedIn();
   const breadcrumbRef = useZustantStoreBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
@@ -55,7 +57,7 @@ const RoleDetails = () => {
       actions={
         <div className="flex space-x-2">
           <Button.Cancel
-            onClick={() => router.push(CONST_PAGES.SECURITY.ROLES.PATH)}
+            onClick={() => router.push(CONST_PAGES.APP.SECURITY.ROLES.PATH)}
           />
 
           <Button.Save form="form" type="submit" />
@@ -159,7 +161,7 @@ const submitHandler = ({
     APIRolesPost(values, (res) => {
       if (!AxiosRequest.isAxiosError(res)) {
         toast.success(`Successfully created right`);
-        router.push(CONST_PAGES.SECURITY.ROLES.PATH);
+        router.push(CONST_PAGES.APP.SECURITY.ROLES.PATH);
       }
     });
   } else {
@@ -167,7 +169,7 @@ const submitHandler = ({
       APIRolesPut(id, values, (res) => {
         if (!AxiosRequest.isAxiosError(res)) {
           toast.success(`Successfully updated right`);
-          router.push(CONST_PAGES.SECURITY.ROLES.PATH);
+          router.push(CONST_PAGES.APP.SECURITY.ROLES.PATH);
         }
       });
   }
