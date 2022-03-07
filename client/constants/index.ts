@@ -10,6 +10,7 @@ export const CONST_PAGE_MODE = {
 //
 export const CONST_PAGES = {
   AUTH: {
+    KEY: "/auth",
     LOGIN: {
       KEY: "/auth/login",
       PATH: "/auth/login",

@@ -10,13 +10,10 @@ export const APIAuth = {
     });
 
     //
-    const res = await request.post("/api/auth/login", {
+    return await request.post("/api/auth/login", {
       username: data.credNm,
       password: data.credPwd,
     });
-
-    res?.data?.items && utilBSSetTokens(res?.data?.items);
-    return res;
   },
 
   //

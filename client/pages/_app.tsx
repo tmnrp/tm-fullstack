@@ -10,12 +10,12 @@ import { Layout } from "../components/Layout";
 import { CONST_PAGES } from "../constants";
 import { IBreadcrumbsMethods } from "@tmnrp/react-breadcrumbs";
 import { useEffect, useRef } from "react";
-import { useZustantStoreSetBreadcrumbRef } from "../utils/store";
+import { useZSSetBreadcrumbRef } from "../utils/store";
 
 //
 const _App = ({ Component, pageProps }: AppProps) => {
   const breadcrumbRef = useRef<IBreadcrumbsMethods>(null);
-  const setBreadcrumbRef = useZustantStoreSetBreadcrumbRef();
+  const setBreadcrumbRef = useZSSetBreadcrumbRef();
   useEffect(() => setBreadcrumbRef(breadcrumbRef), [setBreadcrumbRef]);
 
   //

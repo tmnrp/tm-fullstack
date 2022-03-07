@@ -17,11 +17,15 @@ import {
 import { Button } from "../../../../components/button/Button";
 import { PageWrap } from "../../../../components/PageWrap";
 import { CONST_PAGE_MODE, CONST_PAGES } from "../../../../constants";
-import { useZustantStoreBreadcrumbRef } from "../../../../utils/store";
+import { useZSBreadcrumbRef } from "../../../../utils/store";
+import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const UserDetails = () => {
-  const breadcrumbRef = useZustantStoreBreadcrumbRef();
+  utilBSIsUserLoggedIn();
+
+  //
+  const breadcrumbRef = useZSBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
   //
@@ -32,13 +36,12 @@ const UserDetails = () => {
   //
   const [userDetails, setUserDetails] = useState<IUsersGET>();
   useEffect(() => {
-    if (id && !isNewPage) {
-      APIUsersGetById(
-        `${id}`,
-        (res) =>
-          !AxiosRequest.isAxiosError(res) && setUserDetails(res?.data?.items)
-      );
-    }
+    (async () => {
+      if (id && !isNewPage) {
+        const res = await APIUsersGetById(`${id}`);
+        !AxiosRequest.isAxiosError(res) && setUserDetails(res?.data?.items);
+      }
+    })();
   }, [id, isNewPage]);
 
   //
@@ -210,7 +213,7 @@ const UserDetails = () => {
 export default UserDetails;
 
 //
-const submitHandler = ({
+const submitHandler = async ({
   id,
   isNewPage,
   values,
@@ -224,20 +227,19 @@ const submitHandler = ({
   }
 
   if (isNewPage) {
-    APIUsersPost({ ...values }, (res) => {
+    const res = await APIUsersPost({ ...values });
+    if (!AxiosRequest.isAxiosError(res)) {
+      toast.success(`Successfully created user ${values.username}`);
+      router.push(CONST_PAGES.APP.SECURITY.USERS.PATH);
+    }
+  } else {
+    if (id) {
+      const res = await APIUsersPut(id, values);
       if (!AxiosRequest.isAxiosError(res)) {
-        toast.success(`Successfully created user ${values.username}`);
+        toast.success(`Successfully updated user ${values.username}`);
         router.push(CONST_PAGES.APP.SECURITY.USERS.PATH);
       }
-    });
-  } else {
-    id &&
-      APIUsersPut(id, values, (res) => {
-        if (!AxiosRequest.isAxiosError(res)) {
-          toast.success(`Successfully updated user ${values.username}`);
-          router.push(CONST_PAGES.APP.SECURITY.USERS.PATH);
-        }
-      });
+    }
   }
 };
 

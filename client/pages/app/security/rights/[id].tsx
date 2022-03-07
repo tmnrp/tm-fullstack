@@ -15,11 +15,15 @@ import {
 import { Button } from "../../../../components/button/Button";
 import { PageWrap } from "../../../../components/PageWrap";
 import { CONST_PAGE_MODE, CONST_PAGES } from "../../../../constants";
-import { useZustantStoreBreadcrumbRef } from "../../../../utils/store";
+import { useZSBreadcrumbRef } from "../../../../utils/store";
+import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const RightDetails = () => {
-  const breadcrumbRef = useZustantStoreBreadcrumbRef();
+  utilBSIsUserLoggedIn();
+
+  //
+  const breadcrumbRef = useZSBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
   //

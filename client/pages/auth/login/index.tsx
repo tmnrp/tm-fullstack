@@ -5,10 +5,13 @@ import { APIAuth } from "../../../api/security/APIAuth";
 import { useRouter } from "next/router";
 import { CONST_PAGES } from "../../../constants";
 import { AxiosRequest } from "../../../api";
+import { utilBSSetTokens } from "../../../utils/browserStorage";
+import { useZStore } from "../../../utils/store";
 
 //
 const Login = () => {
   const router = useRouter();
+  const setUser = useZStore((state) => state.setUser);
 
   const submitHandler = useCallback(
     async (values: IUserCreds) => {
@@ -17,9 +20,17 @@ const Login = () => {
         credPwd: values.password,
       });
 
-      !AxiosRequest.isAxiosError(res) && router.push(CONST_PAGES.APP.HOME.PATH);
+      if (!AxiosRequest.isAxiosError(res)) {
+        const { items } = res?.data || {};
+
+        if (items) {
+          utilBSSetTokens(res?.data?.items);
+          setUser(items);
+          router.push(CONST_PAGES.APP.HOME.PATH);
+        }
+      }
     },
-    [router]
+    [router, setUser]
   );
 
   //

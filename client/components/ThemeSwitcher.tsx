@@ -1,9 +1,6 @@
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
 import { useEffect } from "react";
-import {
-  useZustantStoreSetThemeMode,
-  useZustantStoreThemeMode,
-} from "../utils/store";
+import { useZSSetThemeMode, useZSThemeMode } from "../utils/store";
 
 //
 export const CONST_THEME_MODES = {
@@ -13,8 +10,8 @@ export const CONST_THEME_MODES = {
 
 //
 export const ThemeSwitcher = () => {
-  const themeMode = useZustantStoreThemeMode();
-  const setThemeMode = useZustantStoreSetThemeMode();
+  const themeMode = useZSThemeMode();
+  const setThemeMode = useZSSetThemeMode();
 
   //
   useEffect(() => {

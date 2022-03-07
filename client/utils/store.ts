@@ -16,10 +16,14 @@ interface IGlobalState {
   setBreadcrumbRef: (
     breadcrumbRef: React.RefObject<IBreadcrumbsMethods>
   ) => void;
+
+  //
+  user: any;
+  setUser: (user: any) => void;
 }
 
 //
-const useZustantStore = create<IGlobalState>((set: any) => ({
+export const useZStore = create<IGlobalState>((set: any) => ({
   isExpanded: false,
   toggle: () =>
     set((state: IGlobalState) => ({ isExpanded: !state.isExpanded })),
@@ -32,28 +36,26 @@ const useZustantStore = create<IGlobalState>((set: any) => ({
   breadcrumbRef: undefined,
   setBreadcrumbRef: (breadcrumbRef: RefObject<IBreadcrumbsMethods>) =>
     set(() => ({ breadcrumbRef })),
+
+  //
+  user: null,
+  setUser: (user) => set(() => ({ user })),
 }));
 
 //
-export const useZustantStoreIsExpanded = () =>
-  useZustantStore((state) => state.isExpanded);
+export const useZSIsExpanded = () => useZStore((state) => state.isExpanded);
+export const useZSToggle = () => useZStore((state) => state.toggle);
 
 //
-export const useZustantStoreToggle = () =>
-  useZustantStore((state) => state.toggle);
+export const useZSThemeMode = () => useZStore((state) => state.themeMode);
+export const useZSSetThemeMode = () => useZStore((state) => state.setThemeMode);
 
 //
-export const useZustantStoreThemeMode = () =>
-  useZustantStore((state) => state.themeMode);
+export const useZSBreadcrumbRef = () =>
+  useZStore((state) => state.breadcrumbRef);
+export const useZSSetBreadcrumbRef = () =>
+  useZStore((state) => state.setBreadcrumbRef);
 
 //
-export const useZustantStoreSetThemeMode = () =>
-  useZustantStore((state) => state.setThemeMode);
-
-//
-export const useZustantStoreBreadcrumbRef = () =>
-  useZustantStore((state) => state.breadcrumbRef);
-
-//
-export const useZustantStoreSetBreadcrumbRef = () =>
-  useZustantStore((state) => state.setBreadcrumbRef);
+export const useZSUser = () => useZStore((state) => state.user);
+export const useZSSetUser = (user: any) => useZStore(() => user);

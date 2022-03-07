@@ -1,9 +1,9 @@
 import { NextRouter, useRouter } from "next/router";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ICrumb, useBreadcrumbs } from "@tmnrp/react-breadcrumbs";
 import { CONST_PAGES, CONST_PAGE_MODE } from "../../../../constants";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
-import { useZustantStoreBreadcrumbRef } from "../../../../utils/store";
+import { useZSBreadcrumbRef } from "../../../../utils/store";
 import {
   ITableColumns,
   ITableMethods,
@@ -14,10 +14,14 @@ import { Button } from "../../../../components/button/Button";
 import { PageWrap } from "../../../../components/PageWrap";
 import { APIUsersDelete, APIUsersGet } from "../../../../api/security/APIUsers";
 import { IRoles } from "../../../../api/security/APIRoles";
+import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
 
 //
 const Users = () => {
-  const breadcrumbRef = useZustantStoreBreadcrumbRef();
+  utilBSIsUserLoggedIn();
+
+  //
+  const breadcrumbRef = useZSBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
 
   //
@@ -27,10 +31,11 @@ const Users = () => {
   //
   const [reloadCounter, setReloadCounter] = useState(0);
   useEffect(() => {
-    APIUsersGet((res) => {
+    (async () => {
+      const res = await APIUsersGet();
       !AxiosRequest.isAxiosError(res) &&
         ref.current?.setData(res.data.items || []);
-    });
+    })();
   }, [reloadCounter]);
 
   //
@@ -136,11 +141,10 @@ const getColumns = (
             />
 
             <Button.DeleteIcon
-              onClick={() => {
-                APIUsersDelete(record?._id, (res) => {
-                  !AxiosRequest.isAxiosError(res) &&
-                    setReloadCounter((reloadCounter) => ++reloadCounter);
-                });
+              onClick={async () => {
+                const res = await APIUsersDelete(record?._id);
+                !AxiosRequest.isAxiosError(res) &&
+                  setReloadCounter((reloadCounter) => ++reloadCounter);
               }}
             />
           </div>

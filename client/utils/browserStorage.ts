@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { NextRouter } from "next/router";
 import { APIAuth } from "../api/security/APIAuth";
 import { CONST_CONFIG_PUBLIC_KEY, CONST_PAGES } from "../constants";
 
@@ -8,10 +9,12 @@ export const CONST_STORAGE = {
 };
 
 //
-export const signOutUser = () => {
+export const utilSignOutUser = (router?: NextRouter) => {
   if (typeof localStorage !== "undefined") {
     localStorage.clear();
-    window.location.href = `${window.location.origin}${CONST_PAGES.AUTH.LOGIN.PATH}`;
+    router
+      ? router?.push(CONST_PAGES.AUTH.LOGIN.PATH)
+      : (window.location.href = `${window.location.origin}${CONST_PAGES.AUTH.LOGIN.PATH}`);
   }
 };
 
@@ -36,7 +39,7 @@ export const utilBSIsUserLoggedIn = async () => {
       await APIAuth.refreshToken();
     } catch (error: any) {
       console.error(error);
-      signOutUser();
+      utilSignOutUser();
     }
   }
 };

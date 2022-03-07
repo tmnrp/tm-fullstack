@@ -6,15 +6,19 @@ import { Explorer } from "@tmnrp/react-explorer";
 import { CONST_LOGO, CONST_PAGES } from "../constants";
 import { getExplorerContent } from "../pages/_app";
 import {
-  useZustantStoreIsExpanded,
-  useZustantStoreToggle,
+  useZSIsExpanded,
+  useZSToggle,
+  useZStore,
+  useZSUser,
 } from "../utils/store";
+import { Button } from "./button/Button";
+import { utilSignOutUser } from "../utils/browserStorage";
 
 //
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const isExpanded = useZustantStoreIsExpanded();
-  const toggle = useZustantStoreToggle();
+  const isExpanded = useZSIsExpanded();
+  const toggle = useZSToggle();
 
   //
   return (
@@ -66,24 +70,55 @@ const Header = ({
   className: string;
   isExpanded: boolean;
   toggle: () => void;
-}) => (
-  <header className={className}>
-    <div className="flex">
-      <SidebarToggler
-        className="pr-2"
-        toggle={toggle}
-        isExpanded={isExpanded}
-        isExpandedIcon={<GoogleMaterialIcons iconName="menu_open" />}
-        isCollapsedIcon={<GoogleMaterialIcons iconName="menu" />}
-      />
-      <Logo />
-    </div>
+}) => {
+  const router = useRouter();
+  const user = useZSUser();
+  const setUser = useZStore((state) => state.setUser);
 
-    <div className="flex">
-      <ThemeSwitcher />
-    </div>
-  </header>
-);
+  //
+  return (
+    <header className={className}>
+      <div className="flex">
+        {user && (
+          <SidebarToggler
+            className="pr-2"
+            toggle={toggle}
+            isExpanded={isExpanded}
+            isExpandedIcon={<GoogleMaterialIcons iconName="menu_open" />}
+            isCollapsedIcon={<GoogleMaterialIcons iconName="menu" />}
+          />
+        )}
+        <Logo />
+      </div>
+
+      <div className="flex">
+        <div className="mr-2">
+          {user ? (
+            <Button
+              className="button warning px-2"
+              onClick={() => {
+                setUser(null);
+                utilSignOutUser(router);
+              }}
+            >
+              <GoogleMaterialIcons className=" text-lg" iconName="logout" />
+              <span className="uppercase  text-sm">logout</span>
+            </Button>
+          ) : (
+            <Button
+              className="button success px-2"
+              onClick={() => router.push(CONST_PAGES.AUTH.LOGIN.PATH)}
+            >
+              <GoogleMaterialIcons className=" text-lg" iconName="login" />
+              <span className="uppercase  text-sm">login</span>
+            </Button>
+          )}
+        </div>
+        <ThemeSwitcher />
+      </div>
+    </header>
+  );
+};
 
 //
 const Logo = () => {

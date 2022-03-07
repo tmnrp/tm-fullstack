@@ -1,61 +1,34 @@
-import { AxiosResponse } from "axios";
 import { AxiosRequest } from "..";
-import { utilBSIsUserLoggedIn } from "../../utils/browserStorage";
 import { IRoles } from "./APIRoles";
 
 //
-export const APIUsersGet = async (
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  await utilBSIsUserLoggedIn();
+export const APIUsersGet = async () => {
   const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.get("/api/users");
-  callback(res);
+  return await request.get("/api/users");
 };
 
 //
-export const APIUsersGetById = async (
-  id: string,
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  await utilBSIsUserLoggedIn();
+export const APIUsersGetById = async (id: string) => {
   const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.get(`/api/users/${id}`);
-  callback(res);
+  return await request.get(`/api/users/${id}`);
 };
 
 //
-export const APIUsersPost = async (
-  values: IUsers,
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  await utilBSIsUserLoggedIn();
+export const APIUsersPost = async (values: IUsers) => {
   const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.post("/api/users", values);
-  callback(res);
+  return await request.post("/api/users", values);
 };
 
 //
-export const APIUsersPut = async (
-  id: string,
-  values: IUsers,
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  await utilBSIsUserLoggedIn();
+export const APIUsersPut = async (id: string, values: IUsers) => {
   const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.put(`/api/users/${id}`, values);
-  callback(res);
+  return await request.put(`/api/users/${id}`, values);
 };
 
 //
-export const APIUsersDelete = async (
-  id: string,
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  await utilBSIsUserLoggedIn();
+export const APIUsersDelete = async (id: string) => {
   const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.delete(`/api/users/${id}`);
-  callback(res);
+  return await request.delete(`/api/users/${id}`);
 };
 
 //
