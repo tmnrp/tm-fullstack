@@ -5,10 +5,9 @@ import { utilBSGetTokens } from "../utils/browserStorage";
 
 //
 export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
-  const request = axios.create({
-    baseURL: baseURL,
-  });
+  const request = axios.create({ baseURL });
 
+  //
   request.interceptors.request.use(
     (config) => {
       const { accessToken } = utilBSGetTokens();

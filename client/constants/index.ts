@@ -17,8 +17,8 @@ export const CONST_PAGES = {
     },
   },
   LANDING: {
-    KEY: "/",
-    PATH: "/",
+    KEY: "/landing",
+    PATH: "/landing",
   },
   APP: {
     HOME: {

@@ -102,7 +102,7 @@ const Header = ({
               }}
             >
               <GoogleMaterialIcons className=" text-lg" iconName="logout" />
-              <span className="uppercase  text-sm">logout</span>
+              <span className="hidden md:block uppercase text-sm">logout</span>
             </Button>
           ) : (
             <Button
@@ -110,7 +110,7 @@ const Header = ({
               onClick={() => router.push(CONST_PAGES.AUTH.LOGIN.PATH)}
             >
               <GoogleMaterialIcons className=" text-lg" iconName="login" />
-              <span className="uppercase  text-sm">login</span>
+              <span className="hidden md:block uppercase text-sm">login</span>
             </Button>
           )}
         </div>
@@ -128,7 +128,7 @@ const Logo = () => {
   return (
     <div
       className={`
-        text-xl font-extrabold tracking-widest cursor-pointer dark:text-gray-300
+        text-xl font-extrabold tracking-widest cursor-pointer
         ${
           router.pathname === CONST_PAGES.APP.HOME.PATH
             ? "text-emerald-600"
