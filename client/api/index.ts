@@ -9,7 +9,7 @@ export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
 
   //
   request.interceptors.request.use(
-    (config) => {
+    async (config) => {
       const { accessToken } = utilBSGetTokens();
       config.headers = {
         Authorization: `Bearer ${accessToken}`,

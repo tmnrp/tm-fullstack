@@ -14,12 +14,10 @@ import {
   Table,
   ITableColumns,
 } from "../../../../components/table/Table";
-import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
+import { withAuth } from "../../../../hocs/withAuth";
 
 //
 const Roles = () => {
-  utilBSIsUserLoggedIn();
-
   //
   const breadcrumbRef = useZSBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
@@ -63,7 +61,7 @@ const Roles = () => {
     </PageWrap>
   );
 };
-export default Roles;
+export default withAuth(Roles);
 
 //
 const getColumns = (

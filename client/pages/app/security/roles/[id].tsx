@@ -18,12 +18,10 @@ import {
   APIRolesPost,
   APIRolesPut,
 } from "../../../../api/security/APIRoles";
-import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
+import { withAuth } from "../../../../hocs/withAuth";
 
 //
 const RoleDetails = () => {
-  utilBSIsUserLoggedIn();
-
   //
   const breadcrumbRef = useZSBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
@@ -147,7 +145,7 @@ const RoleDetails = () => {
     </PageWrap>
   );
 };
-export default RoleDetails;
+export default withAuth(RoleDetails);
 
 //
 const submitHandler = ({

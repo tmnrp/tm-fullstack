@@ -18,12 +18,10 @@ import { Button } from "../../../../components/button/Button";
 import { PageWrap } from "../../../../components/PageWrap";
 import { CONST_PAGE_MODE, CONST_PAGES } from "../../../../constants";
 import { useZSBreadcrumbRef } from "../../../../utils/store";
-import { utilBSIsUserLoggedIn } from "../../../../utils/browserStorage";
+import { withAuth } from "../../../../hocs/withAuth";
 
 //
 const UserDetails = () => {
-  utilBSIsUserLoggedIn();
-
   //
   const breadcrumbRef = useZSBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
@@ -210,7 +208,7 @@ const UserDetails = () => {
     </PageWrap>
   );
 };
-export default UserDetails;
+export default withAuth(UserDetails);
 
 //
 const submitHandler = async ({

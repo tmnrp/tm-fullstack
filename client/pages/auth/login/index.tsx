@@ -1,21 +1,23 @@
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { useCallback } from "react";
-import { APIAuth } from "../../../api/security/APIAuth";
 import { useRouter } from "next/router";
 import { CONST_PAGES } from "../../../constants";
 import { AxiosRequest } from "../../../api";
 import { utilBSSetTokens } from "../../../utils/browserStorage";
-import { useZStore } from "../../../utils/store";
+import { useZSSetTokens, useZSTokens } from "../../../utils/store";
+import { APIAuthPostLogin } from "../../../api/security/APIAuth";
 
 //
 const Login = () => {
   const router = useRouter();
-  const setUser = useZStore((state) => state.setUser);
+  console.log(useZSTokens());
+
+  const setTokens = useZSSetTokens();
 
   const submitHandler = useCallback(
     async (values: IUserCreds) => {
-      const res = await APIAuth.login({
+      const res = await APIAuthPostLogin({
         credNm: values.username,
         credPwd: values.password,
       });
@@ -24,13 +26,13 @@ const Login = () => {
         const { items } = res?.data || {};
 
         if (items) {
-          utilBSSetTokens(res?.data?.items);
-          setUser(items);
+          utilBSSetTokens(items);
+          setTokens(items);
           router.push(CONST_PAGES.APP.HOME.PATH);
         }
       }
     },
-    [router, setUser]
+    [router, setTokens]
   );
 
   //

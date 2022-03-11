@@ -1,7 +1,5 @@
-import jwt from "jsonwebtoken";
 import { NextRouter } from "next/router";
-import { APIAuth } from "../api/security/APIAuth";
-import { CONST_CONFIG_PUBLIC_KEY, CONST_PAGES } from "../constants";
+import { CONST_PAGES } from "../constants";
 
 //
 export const CONST_STORAGE = {
@@ -9,9 +7,21 @@ export const CONST_STORAGE = {
 };
 
 //
-export const utilSignOutUser = (router?: NextRouter) => {
+interface IUtilSignOutUser {
+  router?: NextRouter;
+  revokeTokens?: () => void;
+}
+export const utilSignOutUser = (props?: IUtilSignOutUser) => {
+  const { router, revokeTokens } = props || {};
+
   if (typeof localStorage !== "undefined") {
+    //
     localStorage.clear();
+
+    //
+    revokeTokens && revokeTokens();
+
+    //
     router
       ? router?.push(CONST_PAGES.AUTH.LOGIN.PATH)
       : (window.location.href = `${window.location.origin}${CONST_PAGES.AUTH.LOGIN.PATH}`);
@@ -19,29 +29,25 @@ export const utilSignOutUser = (router?: NextRouter) => {
 };
 
 //
-export const utilBSGetTokens = (): {
+export const DEFAULT_TOKENS = {
+  accessToken: "",
+  refreshToken: "",
+};
+export interface IUtilBSGetTokens {
   accessToken: string;
   refreshToken: string;
-} =>
-  typeof localStorage !== "undefined" &&
-  JSON.parse(localStorage.getItem(CONST_STORAGE["tokens"]) || "{}");
-
-//
-export const utilBSIsUserLoggedIn = async () => {
-  const { accessToken, refreshToken } = utilBSGetTokens();
-  try {
-    //
-    jwt.verify(accessToken, CONST_CONFIG_PUBLIC_KEY);
-  } catch (error: any) {
-    try {
-      //
-      jwt.verify(refreshToken, CONST_CONFIG_PUBLIC_KEY);
-      await APIAuth.refreshToken();
-    } catch (error: any) {
-      console.error(error);
-      utilSignOutUser();
+}
+export const utilBSGetTokens = (): IUtilBSGetTokens => {
+  //
+  if (typeof localStorage !== "undefined") {
+    const tokens = localStorage.getItem(CONST_STORAGE["tokens"]);
+    if (tokens) {
+      return JSON.parse(tokens);
     }
   }
+
+  //
+  return DEFAULT_TOKENS;
 };
 
 //

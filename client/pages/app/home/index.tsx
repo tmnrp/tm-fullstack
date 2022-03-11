@@ -1,9 +1,7 @@
-import { utilBSIsUserLoggedIn } from "../../../utils/browserStorage";
+import { withAuth } from "../../../hocs/withAuth";
 
 const Home = () => {
-  utilBSIsUserLoggedIn();
-  //
   return <div>Home</div>;
 };
 
-export default Home;
+export default withAuth(Home);

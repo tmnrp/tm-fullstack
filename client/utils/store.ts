@@ -1,6 +1,7 @@
 import create from "zustand";
 import { IBreadcrumbsMethods } from "@tmnrp/react-breadcrumbs";
 import { RefObject } from "react";
+import { DEFAULT_TOKENS, utilBSGetTokens } from "./browserStorage";
 
 //
 interface IGlobalState {
@@ -18,8 +19,9 @@ interface IGlobalState {
   ) => void;
 
   //
-  user: any;
-  setUser: (user: any) => void;
+  tokens: any;
+  setTokens: (user: any) => void;
+  revokeTokens: () => void;
 }
 
 //
@@ -38,8 +40,9 @@ export const useZStore = create<IGlobalState>((set: any) => ({
     set(() => ({ breadcrumbRef })),
 
   //
-  user: null,
-  setUser: (user) => set(() => ({ user })),
+  tokens: utilBSGetTokens(),
+  setTokens: (tokens) => set(() => ({ tokens })),
+  revokeTokens: () => set(() => ({ tokens: DEFAULT_TOKENS })),
 }));
 
 //
@@ -57,5 +60,6 @@ export const useZSSetBreadcrumbRef = () =>
   useZStore((state) => state.setBreadcrumbRef);
 
 //
-export const useZSUser = () => useZStore((state) => state.user);
-export const useZSSetUser = (user: any) => useZStore(() => user);
+export const useZSTokens = () => useZStore((state) => state.tokens);
+export const useZSSetTokens = () => useZStore((state) => state.setTokens);
+export const useZSRevokeTokens = () => useZStore((state) => state.revokeTokens);

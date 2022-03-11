@@ -45,6 +45,26 @@ export const getExplorerContent = ({
     icon: (
       <GoogleMaterialIcons className="pr-2" iconName="admin_panel_settings" />
     ),
+    label: "Hateos",
+    clickable: false,
+    itemProps: {
+      className: "pb-1.5",
+    },
+    items: [
+      {
+        label: "Role based actions",
+        icon: <GoogleMaterialIcons className="pr-2" iconName="people" />,
+        itemProps: {
+          className: "hover:text-primary cursor-pointer pb-1",
+          onClick: () => router.push(CONST_PAGES.APP.HATEOS.PATH),
+        },
+      },
+    ],
+  },
+  {
+    icon: (
+      <GoogleMaterialIcons className="pr-2" iconName="admin_panel_settings" />
+    ),
     label: "Manage",
     clickable: false,
     itemProps: {
