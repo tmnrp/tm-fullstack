@@ -12,7 +12,6 @@ import {
 
 //
 export const postLogin = async (req: Request, res: Response) => {
-  console.log("postLogin");
   try {
     const { username, password: reqPwd } = (req.body as IUsers) || {};
     const users = await usersModel

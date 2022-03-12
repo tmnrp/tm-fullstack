@@ -1,7 +1,7 @@
 import create from "zustand";
 import { IBreadcrumbsMethods } from "@tmnrp/react-breadcrumbs";
 import { RefObject } from "react";
-import { DEFAULT_TOKENS, utilBSGetTokens } from "./browserStorage";
+import { utilBSGetAccessToken, utilBSGetRefreshToken } from "./browserStorage";
 
 //
 interface IGlobalState {
@@ -19,8 +19,10 @@ interface IGlobalState {
   ) => void;
 
   //
-  tokens: any;
-  setTokens: (user: any) => void;
+  accessToken: string;
+  refreshToken: string;
+  setAccessToken: (user: any) => void;
+  setRefreshToken: (user: any) => void;
   revokeTokens: () => void;
 }
 
@@ -40,9 +42,11 @@ export const useZStore = create<IGlobalState>((set: any) => ({
     set(() => ({ breadcrumbRef })),
 
   //
-  tokens: utilBSGetTokens(),
-  setTokens: (tokens) => set(() => ({ tokens })),
-  revokeTokens: () => set(() => ({ tokens: DEFAULT_TOKENS })),
+  accessToken: utilBSGetAccessToken(),
+  refreshToken: utilBSGetRefreshToken(),
+  setAccessToken: (accessToken) => set(() => ({ accessToken })),
+  setRefreshToken: (refreshToken) => set(() => ({ refreshToken })),
+  revokeTokens: () => set(() => ({ accessToken: "", refreshToken: "" })),
 }));
 
 //
@@ -60,6 +64,11 @@ export const useZSSetBreadcrumbRef = () =>
   useZStore((state) => state.setBreadcrumbRef);
 
 //
-export const useZSTokens = () => useZStore((state) => state.tokens);
-export const useZSSetTokens = () => useZStore((state) => state.setTokens);
-export const useZSRevokeTokens = () => useZStore((state) => state.revokeTokens);
+export const useZSAccessToken = () => useZStore((state) => state.accessToken);
+export const useZSRefreshToken = () => useZStore((state) => state.refreshToken);
+export const useZSSetAccessToken = () =>
+  useZStore((state) => state.setAccessToken);
+export const useZSSetRefreshToken = () =>
+  useZStore((state) => state.setRefreshToken);
+export const useZSRevokeTokenss = () =>
+  useZStore((state) => state.revokeTokens);

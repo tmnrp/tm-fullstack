@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { CONST_PAGES } from "../constants";
-import { utilBSGetTokens } from "../utils/browserStorage";
+import { utilBSGetAccessToken } from "../utils/browserStorage";
 
 //
 export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
@@ -10,7 +10,7 @@ export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
   //
   request.interceptors.request.use(
     async (config) => {
-      const { accessToken } = utilBSGetTokens();
+      const accessToken = utilBSGetAccessToken();
       config.headers = {
         Authorization: `Bearer ${accessToken}`,
       };

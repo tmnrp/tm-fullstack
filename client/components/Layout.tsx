@@ -6,13 +6,13 @@ import { Explorer } from "@tmnrp/react-explorer";
 import { CONST_LOGO, CONST_PAGES } from "../constants";
 import { getExplorerContent } from "../pages/_app";
 import {
-  useZSTokens,
   useZSIsExpanded,
   useZSToggle,
-  useZSRevokeTokens,
+  useZSRevokeTokenss,
+  useZSAccessToken,
 } from "../utils/store";
 import { Button } from "./button/Button";
-import { IUtilBSGetTokens, utilSignOutUser } from "../utils/browserStorage";
+import { utilSignOutUser } from "../utils/browserStorage";
 
 //
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -72,15 +72,14 @@ const Header = ({
   toggle: () => void;
 }) => {
   const router = useRouter();
-  const revokeTokens = useZSRevokeTokens();
-  const tokens: IUtilBSGetTokens = useZSTokens();
-  const hasAccessToken = !!tokens?.accessToken;
+  const revokeTokens = useZSRevokeTokenss();
+  const accessToken = useZSAccessToken();
 
   //
   return (
     <header className={className}>
       <div className="flex">
-        {hasAccessToken && (
+        {accessToken && (
           <SidebarToggler
             className="pr-2"
             toggle={toggle}
@@ -94,9 +93,9 @@ const Header = ({
 
       <div className="flex">
         <div className="mr-2">
-          {hasAccessToken ? (
+          {accessToken ? (
             <Button
-              key={`logout-${hasAccessToken}`}
+              key={`logout-${accessToken}`}
               className={`button px-2 warning`}
               onClick={() => utilSignOutUser({ router, revokeTokens })}
             >
@@ -105,7 +104,7 @@ const Header = ({
             </Button>
           ) : (
             <Button
-              key={`login-${hasAccessToken}`}
+              key={`login-${accessToken}`}
               className={`button px-2 success`}
               onClick={() => router.push(CONST_PAGES.AUTH.LOGIN.PATH)}
             >

@@ -4,17 +4,22 @@ import { useCallback } from "react";
 import { useRouter } from "next/router";
 import { CONST_PAGES } from "../../../constants";
 import { AxiosRequest } from "../../../api";
-import { utilBSSetTokens } from "../../../utils/browserStorage";
-import { useZSSetTokens, useZSTokens } from "../../../utils/store";
+import { IUtilBSTokens, utilBSSetTokens } from "../../../utils/browserStorage";
 import { APIAuthPostLogin } from "../../../api/security/APIAuth";
+import {
+  useZSSetAccessToken,
+  useZSSetRefreshToken,
+} from "../../../utils/store";
 
 //
 const Login = () => {
   const router = useRouter();
-  console.log(useZSTokens());
 
-  const setTokens = useZSSetTokens();
+  //
+  const setAccessToken = useZSSetAccessToken();
+  const setRefreshToken = useZSSetRefreshToken();
 
+  //
   const submitHandler = useCallback(
     async (values: IUserCreds) => {
       const res = await APIAuthPostLogin({
@@ -23,16 +28,17 @@ const Login = () => {
       });
 
       if (!AxiosRequest.isAxiosError(res)) {
-        const { items } = res?.data || {};
+        const tokens: IUtilBSTokens = res?.data?.items;
 
-        if (items) {
-          utilBSSetTokens(items);
-          setTokens(items);
+        if (tokens) {
+          utilBSSetTokens(tokens);
+          setAccessToken(tokens?.accessToken);
+          setRefreshToken(tokens?.refreshToken);
           router.push(CONST_PAGES.APP.HOME.PATH);
         }
       }
     },
-    [router, setTokens]
+    [router, setAccessToken, setRefreshToken]
   );
 
   //
