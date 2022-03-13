@@ -17,7 +17,12 @@ export const postLogin = async (req: Request, res: Response) => {
     const users = await usersModel
       .find({ username })
       .lean()
-      .populate("rolesID");
+      .populate({
+        path: "rolesID",
+        populate: {
+          path: "rightsID",
+        },
+      });
 
     //
     if (users.length > 0) {

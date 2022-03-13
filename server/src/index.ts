@@ -10,6 +10,7 @@ import { UserRouter } from "./router/users.router";
 import { connectDB } from "./utils/db";
 import { Logger } from "./utils/logger";
 import { AuthRouter } from "./router/auth.router";
+import { HateosRouter } from "./router/hateos.router";
 
 // Main
 const app: Application = express();
@@ -29,6 +30,7 @@ app.use(protectedRouteMiddleware);
 app.use(COSNT_ROUTES.RIGHTS, RightsRouter);
 app.use(COSNT_ROUTES.ROLES, RolesRouter);
 app.use(COSNT_ROUTES.USERS, UserRouter);
+app.use(COSNT_ROUTES.HATEOS, HateosRouter);
 
 //
 app.listen(process.env.PORT || CONST_CONFIG_PORT, () => {

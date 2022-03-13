@@ -8,7 +8,7 @@ export const protectedRouteMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const accessToken = req?.headers?.authorization?.split(" ")?.[1] || "";
+  const accessToken = getAccessTokenFromReq(req);
 
   //
   try {
@@ -23,4 +23,8 @@ export const protectedRouteMiddleware = async (
 
   //
   next();
+};
+
+export const getAccessTokenFromReq = (req: Request) => {
+  return req?.headers?.authorization?.split(" ")?.[1] || "";
 };
