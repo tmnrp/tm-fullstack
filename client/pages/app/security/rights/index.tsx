@@ -2,7 +2,6 @@ import { useBreadcrumbs, ICrumb } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
-import { AxiosRequest } from "../../../../api";
 import {
   APIRightsDelete,
   APIRightsGet,
@@ -31,10 +30,10 @@ const Rights = () => {
   //
   const [reloadCounter, setReloadCounter] = useState(0);
   useEffect(() => {
-    APIRightsGet((res) => {
-      !AxiosRequest.isAxiosError(res) &&
-        ref.current?.setData(res.data.items || []);
-    });
+    (async () => {
+      const res = await APIRightsGet();
+      ref.current?.setData(res.data.items || []);
+    })();
   }, [reloadCounter]);
 
   //
@@ -98,11 +97,9 @@ const getColumns = (
             />
 
             <Button.DeleteIcon
-              onClick={() => {
-                APIRightsDelete(record?._id, (res) => {
-                  !AxiosRequest.isAxiosError(res) &&
-                    setReloadCounter((reloadCounter) => ++reloadCounter);
-                });
+              onClick={async () => {
+                await APIRightsDelete(record?._id);
+                setReloadCounter((reloadCounter) => ++reloadCounter);
               }}
             />
           </div>

@@ -1,56 +1,5 @@
-import { AxiosResponse } from "axios";
-import { AxiosRequest } from "..";
+import { axiosRequest } from "..";
 import { IRights } from "./APIRights";
-
-//
-export const APIRolesGet = async (
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.get("/api/roles");
-  callback(res);
-};
-
-//
-export const APIRolesGetById = async (
-  id: string,
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.get(`/api/roles/${id}`);
-  callback(res);
-};
-
-//
-export const APIRolesPost = async (
-  values: IRoles,
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.post("/api/roles", values);
-  callback(res);
-};
-
-//
-export const APIRolesPut = async (
-  id: string,
-  values: IRoles,
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.put(`/api/roles/${id}`, values);
-  callback(res);
-};
-
-//
-export const APIRolesDelete = async (
-  id: string,
-  callback: (res: AxiosResponse<any, any>) => void
-) => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  const res = await request.delete(`/api/roles/${id}`);
-  callback(res);
-};
 
 //
 export interface IRoles {
@@ -65,3 +14,48 @@ export interface IRolesGET {
   name: string | undefined;
   rightsID: Array<IRights>;
 }
+
+//
+export const APIRolesGet = async () => {
+  try {
+    return await axiosRequest.get("/api/roles");
+  } catch (error: any) {
+    return error;
+  }
+};
+
+//
+export const APIRolesGetById = async (id: string) => {
+  try {
+    return await axiosRequest.get(`/api/roles/${id}`);
+  } catch (error: any) {
+    return error;
+  }
+};
+
+//
+export const APIRolesPost = async (values: IRoles) => {
+  try {
+    return await axiosRequest.post("/api/roles", values);
+  } catch (error: any) {
+    return error;
+  }
+};
+
+//
+export const APIRolesPut = async (id: string, values: IRoles) => {
+  try {
+    return await axiosRequest.put(`/api/roles/${id}`, values);
+  } catch (error: any) {
+    return error;
+  }
+};
+
+//
+export const APIRolesDelete = async (id: string) => {
+  try {
+    return await axiosRequest.delete(`/api/roles/${id}`);
+  } catch (error: any) {
+    return error;
+  }
+};

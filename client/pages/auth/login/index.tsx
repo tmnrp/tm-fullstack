@@ -3,7 +3,6 @@ import { Form, Formik } from "formik";
 import { useCallback } from "react";
 import { useRouter } from "next/router";
 import { CONST_PAGES } from "../../../constants";
-import { AxiosRequest } from "../../../api";
 import { IUtilBSTokens, utilBSSetTokens } from "../../../utils/browserStorage";
 import { APIAuthPostLogin } from "../../../api/security/APIAuth";
 import {
@@ -27,15 +26,13 @@ const Login = () => {
         credPwd: values.password,
       });
 
-      if (!AxiosRequest.isAxiosError(res)) {
-        const tokens: IUtilBSTokens = res?.data?.items;
+      const tokens: IUtilBSTokens = res?.data?.items;
 
-        if (tokens) {
-          utilBSSetTokens(tokens);
-          setAccessToken(tokens?.accessToken);
-          setRefreshToken(tokens?.refreshToken);
-          router.push(CONST_PAGES.APP.HOME.PATH);
-        }
+      if (tokens) {
+        utilBSSetTokens(tokens);
+        setAccessToken(tokens?.accessToken);
+        setRefreshToken(tokens?.refreshToken);
+        router.push(CONST_PAGES.APP.HOME.PATH);
       }
     },
     [router, setAccessToken, setRefreshToken]

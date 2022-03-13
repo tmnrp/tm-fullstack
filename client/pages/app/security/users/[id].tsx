@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { ICrumb, useBreadcrumbs } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
-import { AxiosRequest } from "../../../../api";
 import { IRoles, APIRolesGet } from "../../../../api/security/APIRoles";
 import {
   IUsersGET,
@@ -37,7 +36,7 @@ const UserDetails = () => {
     (async () => {
       if (id && !isNewPage) {
         const res = await APIUsersGetById(`${id}`);
-        !AxiosRequest.isAxiosError(res) && setUserDetails(res?.data?.items);
+        setUserDetails(res?.data?.items);
       }
     })();
   }, [id, isNewPage]);
@@ -45,9 +44,10 @@ const UserDetails = () => {
   //
   const [roles, setRoles] = useState<Array<IRoles>>([]);
   useEffect(() => {
-    APIRolesGet((res) => {
-      !AxiosRequest.isAxiosError(res) && setRoles(res.data.items || []);
-    });
+    (async () => {
+      const res = await APIRolesGet();
+      setRoles(res?.data?.items || []);
+    })();
   }, []);
 
   //
@@ -225,18 +225,14 @@ const submitHandler = async ({
   }
 
   if (isNewPage) {
-    const res = await APIUsersPost({ ...values });
-    if (!AxiosRequest.isAxiosError(res)) {
-      toast.success(`Successfully created user ${values.username}`);
-      router.push(CONST_PAGES.APP.SECURITY.USERS.PATH);
-    }
+    await APIUsersPost({ ...values });
+    toast.success(`Successfully created user ${values.username}`);
+    router.push(CONST_PAGES.APP.SECURITY.USERS.PATH);
   } else {
     if (id) {
-      const res = await APIUsersPut(id, values);
-      if (!AxiosRequest.isAxiosError(res)) {
-        toast.success(`Successfully updated user ${values.username}`);
-        router.push(CONST_PAGES.APP.SECURITY.USERS.PATH);
-      }
+      await APIUsersPut(id, values);
+      toast.success(`Successfully updated user ${values.username}`);
+      router.push(CONST_PAGES.APP.SECURITY.USERS.PATH);
     }
   }
 };

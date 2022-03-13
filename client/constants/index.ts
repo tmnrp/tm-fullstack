@@ -21,6 +21,7 @@ export const CONST_PAGES = {
     PATH: "/landing",
   },
   APP: {
+    KEY: "/app",
     HOME: {
       KEY: "/app/home",
       PATH: "/app/home",
@@ -45,6 +46,18 @@ export const CONST_PAGES = {
     },
   },
 };
+
+//
+export const CONST_CONFIG_EXCLUDE_PROTECTED_ROUTES = [
+  CONST_PAGES.LANDING.KEY,
+  CONST_PAGES.AUTH.KEY,
+];
+
+//
+export const CONST_CONFIG_BASE_URL =
+  typeof window !== "undefined" && window.location.hostname === "localhost"
+    ? "http://localhost:3001/"
+    : "https://tm-fullstack.herokuapp.com/";
 
 //
 export const CONST_CONFIG_PUBLIC_KEY = `-----BEGIN PUBLIC KEY-----

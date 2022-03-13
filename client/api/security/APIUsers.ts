@@ -1,35 +1,5 @@
-import { AxiosRequest } from "..";
+import { axiosRequest } from "..";
 import { IRoles } from "./APIRoles";
-
-//
-export const APIUsersGet = async () => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  return await request.get("/api/users");
-};
-
-//
-export const APIUsersGetById = async (id: string) => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  return await request.get(`/api/users/${id}`);
-};
-
-//
-export const APIUsersPost = async (values: IUsers) => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  return await request.post("/api/users", values);
-};
-
-//
-export const APIUsersPut = async (id: string, values: IUsers) => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  return await request.put(`/api/users/${id}`, values);
-};
-
-//
-export const APIUsersDelete = async (id: string) => {
-  const request = AxiosRequest({ baseURL: AxiosRequest.BASE_URL });
-  return await request.delete(`/api/users/${id}`);
-};
 
 //
 export interface IUsers {
@@ -49,3 +19,48 @@ export interface IUsersGET {
   lastName: string | undefined;
   rolesID: IRoles;
 }
+
+//
+export const APIUsersGet = async () => {
+  try {
+    return await axiosRequest.get("/api/users");
+  } catch (error: any) {
+    return error;
+  }
+};
+
+//
+export const APIUsersGetById = async (id: string) => {
+  try {
+    return await axiosRequest.get(`/api/users/${id}`);
+  } catch (error: any) {
+    return error;
+  }
+};
+
+//
+export const APIUsersPost = async (values: IUsers) => {
+  try {
+    return await axiosRequest.post("/api/users", values);
+  } catch (error: any) {
+    return error;
+  }
+};
+
+//
+export const APIUsersPut = async (id: string, values: IUsers) => {
+  try {
+    return await axiosRequest.put(`/api/users/${id}`, values);
+  } catch (error: any) {
+    return error;
+  }
+};
+
+//
+export const APIUsersDelete = async (id: string) => {
+  try {
+    return await axiosRequest.delete(`/api/users/${id}`);
+  } catch (error: any) {
+    return error;
+  }
+};

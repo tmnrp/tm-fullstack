@@ -9,7 +9,6 @@ import {
   ITableMethods,
   Table,
 } from "../../../../components/table/Table";
-import { AxiosRequest } from "../../../../api";
 import { Button } from "../../../../components/button/Button";
 import { PageWrap } from "../../../../components/PageWrap";
 import { APIUsersDelete, APIUsersGet } from "../../../../api/security/APIUsers";
@@ -31,8 +30,7 @@ const Users = () => {
   useEffect(() => {
     (async () => {
       const res = await APIUsersGet();
-      !AxiosRequest.isAxiosError(res) &&
-        ref.current?.setData(res.data.items || []);
+      ref.current?.setData(res.data.items || []);
     })();
   }, [reloadCounter]);
 
@@ -140,9 +138,8 @@ const getColumns = (
 
             <Button.DeleteIcon
               onClick={async () => {
-                const res = await APIUsersDelete(record?._id);
-                !AxiosRequest.isAxiosError(res) &&
-                  setReloadCounter((reloadCounter) => ++reloadCounter);
+                await APIUsersDelete(record?._id);
+                setReloadCounter((reloadCounter) => ++reloadCounter);
               }}
             />
           </div>

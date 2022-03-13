@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { ICrumb, useBreadcrumbs } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
-import { AxiosRequest } from "../../../../api";
 import { APIRightsGet, IRights } from "../../../../api/security/APIRights";
 import { Button } from "../../../../components/button/Button";
 import { PageWrap } from "../../../../components/PageWrap";
@@ -34,21 +33,21 @@ const RoleDetails = () => {
   //
   const [roleDetails, setRoleDetails] = useState<IRolesGET>();
   useEffect(() => {
-    if (id && !isNewPage) {
-      APIRolesGetById(
-        `${id}`,
-        (res) =>
-          !AxiosRequest.isAxiosError(res) && setRoleDetails(res?.data?.items)
-      );
-    }
+    (async () => {
+      if (id && !isNewPage) {
+        const res = await APIRolesGetById(`${id}`);
+        setRoleDetails(res?.data?.items);
+      }
+    })();
   }, [id, isNewPage]);
 
   //
   const [rights, setRights] = useState<Array<IRoles>>([]);
   useEffect(() => {
-    APIRightsGet((res) => {
-      !AxiosRequest.isAxiosError(res) && setRights(res.data.items || []);
-    });
+    (async () => {
+      const res = await APIRightsGet();
+      setRights(res.data.items || []);
+    })();
   }, []);
 
   //
@@ -157,22 +156,17 @@ const submitHandler = ({
   isNewPage: boolean;
   values: IRoles;
 }) => {
-  if (isNewPage) {
-    APIRolesPost(values, (res) => {
-      if (!AxiosRequest.isAxiosError(res)) {
-        toast.success(`Successfully created right`);
-        router.push(CONST_PAGES.APP.SECURITY.ROLES.PATH);
-      }
-    });
-  } else {
-    id &&
-      APIRolesPut(id, values, (res) => {
-        if (!AxiosRequest.isAxiosError(res)) {
-          toast.success(`Successfully updated right`);
-          router.push(CONST_PAGES.APP.SECURITY.ROLES.PATH);
-        }
-      });
-  }
+  (async () => {
+    if (isNewPage) {
+      await APIRolesPost(values);
+      toast.success(`Successfully created right`);
+      router.push(CONST_PAGES.APP.SECURITY.ROLES.PATH);
+    } else if (id) {
+      await APIRolesPut(id, values);
+      toast.success(`Successfully updated right`);
+      router.push(CONST_PAGES.APP.SECURITY.ROLES.PATH);
+    }
+  })();
 };
 
 //

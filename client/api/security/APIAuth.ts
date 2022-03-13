@@ -1,4 +1,6 @@
-import { AxiosRequest } from "..";
+import axios from "axios";
+import { axiosRequest } from "..";
+import { CONST_CONFIG_BASE_URL } from "../../constants";
 import {
   utilBSGetAccessToken,
   utilBSGetRefreshToken,
@@ -11,33 +13,33 @@ export const APIAuthPostLogin = async (data: {
   credPwd: string;
 }) => {
   try {
-    const request = AxiosRequest({
-      baseURL: AxiosRequest.BASE_URL,
-    });
-
     //
-    return await request.post("/api/auth/login", {
+    return await axiosRequest.post("/api/auth/login", {
       username: data.credNm,
       password: data.credPwd,
     });
   } catch (error: any) {
-    console.error("APIAuthPostLogin", error);
+    return error;
   }
 };
 
 //
 export const APIAuthRefreshAccessToken = async () => {
   try {
-    const request = AxiosRequest({
-      baseURL: AxiosRequest.BASE_URL,
-    });
-
     const accessToken = utilBSGetAccessToken();
     const refreshToken = utilBSGetRefreshToken();
-    const res = await request.post("/api/auth/refresh-token", {
-      accessToken: accessToken,
-      refreshToken: refreshToken,
-    });
+    const res = await axios.post(
+      `${CONST_CONFIG_BASE_URL}api/auth/refresh-token`,
+      {
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     res?.data?.newAccessToken &&
       refreshToken &&
@@ -46,6 +48,6 @@ export const APIAuthRefreshAccessToken = async () => {
         refreshToken: refreshToken,
       });
   } catch (error: any) {
-    console.error("APIAuthRefreshAccessToken", error);
+    return error;
   }
 };

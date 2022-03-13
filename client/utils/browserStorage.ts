@@ -64,6 +64,8 @@ export const utilBSGetAccessToken = (): string => {
   //
   return "";
 };
+
+//
 export const utilBSGetRefreshToken = (): string => {
   //
   if (typeof localStorage !== "undefined") {

@@ -1,54 +1,57 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { CONST_PAGES } from "../constants";
-import { utilBSGetAccessToken } from "../utils/browserStorage";
+import { utilBSGetAccessToken, utilSignOutUser } from "../utils/browserStorage";
+import { validateTokens } from "../utils/tokenManagement";
+import {
+  CONST_CONFIG_BASE_URL,
+  CONST_CONFIG_EXCLUDE_PROTECTED_ROUTES,
+} from "../constants";
 
 //
-export const AxiosRequest = ({ baseURL = "" }: { baseURL: string }) => {
-  const request = axios.create({ baseURL });
+export const axiosRequest = axios.create({ baseURL: CONST_CONFIG_BASE_URL });
 
-  //
-  request.interceptors.request.use(
-    async (config) => {
-      const accessToken = utilBSGetAccessToken();
-      config.headers = {
-        Authorization: `Bearer ${accessToken}`,
-      };
-      return config;
-    },
-    (error) => error
-  );
+//
+axiosRequest.interceptors.request.use(
+  async (config) => {
+    config.headers = {
+      Authorization: `Bearer ${utilBSGetAccessToken()}`,
+    };
 
-  // Add a response interceptor
-  request.interceptors.response.use(
-    (config) => config,
-    (error) => {
-      const { status } = error?.response;
-      console.error(error);
-      if (status === 401) {
-        window.location.href = `${window.location.origin}${CONST_PAGES.AUTH.LOGIN.PATH}`;
-        toast.error(error?.response?.data?.message);
-      } else {
-        toast.error(
-          error?.response?.data?.message ||
-            "Error, Please contact administrator"
-        );
+    //
+    const isExcludedRoute = CONST_CONFIG_EXCLUDE_PROTECTED_ROUTES.some(
+      (excludedRoute) => {
+        return window?.location?.pathname?.indexOf(excludedRoute) >= 0;
       }
-
-      //
-      return error;
+    );
+    if (!isExcludedRoute) {
+      await validateTokens();
+      config.headers = {
+        Authorization: `Bearer ${utilBSGetAccessToken()}`,
+      };
     }
-  );
 
-  //
-  return request;
-};
-
-//
-AxiosRequest.isAxiosError = (res: any) => axios.isAxiosError(res);
+    //
+    return config;
+  },
+  (error) => error
+);
 
 //
-AxiosRequest.BASE_URL =
-  typeof window !== "undefined" && window.location.hostname === "localhost"
-    ? "http://localhost:3001/"
-    : "https://tm-fullstack.herokuapp.com/";
+axiosRequest.interceptors.response.use(
+  (config) => config,
+  (error) => {
+    const { status } = error?.response;
+    console.error(error);
+    if (status === 401) {
+      utilSignOutUser();
+      toast.error(error?.response?.data?.message);
+    } else {
+      toast.error(
+        error?.response?.data?.message || "Error, Please contact administrator"
+      );
+    }
+
+    //
+    return error;
+  }
+);

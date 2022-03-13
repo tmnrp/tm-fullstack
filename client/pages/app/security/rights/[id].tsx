@@ -5,18 +5,17 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useBreadcrumbs, ICrumb } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
-import { AxiosRequest } from "../../../../api";
+import { Button } from "../../../../components/button/Button";
+import { PageWrap } from "../../../../components/PageWrap";
+import { CONST_PAGE_MODE, CONST_PAGES } from "../../../../constants";
+import { useZSBreadcrumbRef } from "../../../../utils/store";
+import { withAuth } from "../../../../hocs/withAuth";
 import {
   APIRightsGetById,
   APIRightsPost,
   APIRightsPut,
   IRights,
 } from "../../../../api/security/APIRights";
-import { Button } from "../../../../components/button/Button";
-import { PageWrap } from "../../../../components/PageWrap";
-import { CONST_PAGE_MODE, CONST_PAGES } from "../../../../constants";
-import { useZSBreadcrumbRef } from "../../../../utils/store";
-import { withAuth } from "../../../../hocs/withAuth";
 
 //
 const RightDetails = () => {
@@ -32,13 +31,12 @@ const RightDetails = () => {
   //
   const [rightDetails, setRightDetails] = useState<IRights>();
   useEffect(() => {
-    if (id && !isNewPage) {
-      APIRightsGetById(
-        `${id}`,
-        (res) =>
-          !AxiosRequest.isAxiosError(res) && setRightDetails(res?.data?.items)
-      );
-    }
+    (async () => {
+      if (id && !isNewPage) {
+        const res = await APIRightsGetById(`${id}`);
+        setRightDetails(res?.data?.items);
+      }
+    })();
   }, [id, isNewPage]);
 
   //
@@ -109,22 +107,17 @@ const submitHandler = ({
   isNewPage: boolean;
   values: IRights;
 }) => {
-  if (isNewPage) {
-    APIRightsPost({ ...values }, (res) => {
-      if (!AxiosRequest.isAxiosError(res)) {
-        toast.success(`Successfully created right ${values.name}`);
-        router.push(CONST_PAGES.APP.SECURITY.RIGHTS.PATH);
-      }
-    });
-  } else {
-    id &&
-      APIRightsPut(id, values, (res) => {
-        if (!AxiosRequest.isAxiosError(res)) {
-          toast.success(`Successfully updated right ${values.name}`);
-          router.push(CONST_PAGES.APP.SECURITY.RIGHTS.PATH);
-        }
-      });
-  }
+  (async () => {
+    if (isNewPage) {
+      await APIRightsPost({ ...values });
+      toast.success(`Successfully created right ${values.name}`);
+      router.push(CONST_PAGES.APP.SECURITY.RIGHTS.PATH);
+    } else if (id) {
+      await APIRightsPut(id, values);
+      toast.success(`Successfully updated right ${values.name}`);
+      router.push(CONST_PAGES.APP.SECURITY.RIGHTS.PATH);
+    }
+  })();
 };
 
 //
