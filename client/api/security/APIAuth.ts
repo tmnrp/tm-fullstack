@@ -1,38 +1,51 @@
 import { AxiosRequest } from "..";
-import { utilBSGetTokens, utilBSSetTokens } from "../../utils/browserStorage";
+import {
+  utilBSGetAccessToken,
+  utilBSGetRefreshToken,
+  utilBSSetTokens,
+} from "../../utils/browserStorage";
 
 //
 export const APIAuthPostLogin = async (data: {
   credNm: string;
   credPwd: string;
 }) => {
-  const request = AxiosRequest({
-    baseURL: AxiosRequest.BASE_URL,
-  });
+  try {
+    const request = AxiosRequest({
+      baseURL: AxiosRequest.BASE_URL,
+    });
 
-  //
-  return await request.post("/api/auth/login", {
-    username: data.credNm,
-    password: data.credPwd,
-  });
+    //
+    return await request.post("/api/auth/login", {
+      username: data.credNm,
+      password: data.credPwd,
+    });
+  } catch (error: any) {
+    console.error("APIAuthPostLogin", error);
+  }
 };
 
 //
 export const APIAuthRefreshAccessToken = async () => {
-  const request = AxiosRequest({
-    baseURL: AxiosRequest.BASE_URL,
-  });
+  try {
+    const request = AxiosRequest({
+      baseURL: AxiosRequest.BASE_URL,
+    });
 
-  const { accessToken, refreshToken } = utilBSGetTokens();
-  const res = await request.post("/api/auth/refresh-token", {
-    accessToken: accessToken,
-    refreshToken: refreshToken,
-  });
-
-  res?.data?.newAccessToken &&
-    refreshToken &&
-    utilBSSetTokens({
-      accessToken: res?.data?.newAccessToken,
+    const accessToken = utilBSGetAccessToken();
+    const refreshToken = utilBSGetRefreshToken();
+    const res = await request.post("/api/auth/refresh-token", {
+      accessToken: accessToken,
       refreshToken: refreshToken,
     });
+
+    res?.data?.newAccessToken &&
+      refreshToken &&
+      utilBSSetTokens({
+        accessToken: res?.data?.newAccessToken,
+        refreshToken: refreshToken,
+      });
+  } catch (error: any) {
+    console.error("APIAuthRefreshAccessToken", error);
+  }
 };
