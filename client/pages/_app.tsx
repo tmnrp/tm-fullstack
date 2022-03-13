@@ -11,9 +11,14 @@ import { CONST_PAGES } from "../constants";
 import { IBreadcrumbsMethods } from "@tmnrp/react-breadcrumbs";
 import { useEffect, useRef } from "react";
 import { useZSSetBreadcrumbRef } from "../utils/store";
+import { useSyncBSToZS } from "../utils/browserStorage";
 
 //
 const _App = ({ Component, pageProps }: AppProps) => {
+  //
+  useSyncBSToZS();
+
+  //
   const breadcrumbRef = useRef<IBreadcrumbsMethods>(null);
   const setBreadcrumbRef = useZSSetBreadcrumbRef();
   useEffect(() => setBreadcrumbRef(breadcrumbRef), [setBreadcrumbRef]);

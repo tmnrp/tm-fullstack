@@ -1,17 +1,20 @@
 /* eslint-disable react/display-name */
 import jwt from "jsonwebtoken";
 import React, { useEffect, useState } from "react";
-import { utilSignOutUser } from "../utils/browserStorage";
+import {
+  utilBSGetAccessToken,
+  utilBSGetRefreshToken,
+  utilSignOutUser,
+} from "../utils/browserStorage";
 import { CONST_CONFIG_PUBLIC_KEY } from "../constants";
 import { APIAuthRefreshAccessToken } from "../api/security/APIAuth";
 import { useRouter } from "next/router";
-import { useZSAccessToken, useZSRefreshToken } from "../utils/store";
 
 //
 export const withAuth = (Cmp: any) => {
   return () => {
-    const accessToken = useZSAccessToken();
-    const refreshToken = useZSRefreshToken();
+    const accessToken = utilBSGetAccessToken();
+    const refreshToken = utilBSGetRefreshToken();
     const router = useRouter();
     const [isValid, setIsValid] = useState(false);
 

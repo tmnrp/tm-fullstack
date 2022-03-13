@@ -1,10 +1,26 @@
 import { NextRouter } from "next/router";
+import { useEffect } from "react";
 import { CONST_PAGES } from "../constants";
+import { useZSSetAccessToken, useZSSetRefreshToken } from "./store";
 
 //
 export const CONST_BROWSER_STORAGE_KEYS = {
   "access-token": "access-token",
   "refresh-token": "refresh-token",
+};
+
+/**
+ * update the global state with the browser storage data after
+ * the initial render to avoid state issues in component classnames.
+ */
+export const useSyncBSToZS = () => {
+  //
+  const setAccessToken = useZSSetAccessToken();
+  useEffect(() => setAccessToken(utilBSGetAccessToken()), [setAccessToken]);
+
+  //
+  const setRefreshToken = useZSSetRefreshToken();
+  useEffect(() => setRefreshToken(utilBSGetRefreshToken()), [setRefreshToken]);
 };
 
 //

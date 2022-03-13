@@ -1,7 +1,6 @@
 import create from "zustand";
 import { IBreadcrumbsMethods } from "@tmnrp/react-breadcrumbs";
 import { RefObject } from "react";
-import { utilBSGetAccessToken, utilBSGetRefreshToken } from "./browserStorage";
 
 //
 interface IGlobalState {
@@ -42,8 +41,8 @@ export const useZStore = create<IGlobalState>((set: any) => ({
     set(() => ({ breadcrumbRef })),
 
   //
-  accessToken: utilBSGetAccessToken(),
-  refreshToken: utilBSGetRefreshToken(),
+  accessToken: "",
+  refreshToken: "",
   setAccessToken: (accessToken) => set(() => ({ accessToken })),
   setRefreshToken: (refreshToken) => set(() => ({ refreshToken })),
   revokeTokens: () => set(() => ({ accessToken: "", refreshToken: "" })),
