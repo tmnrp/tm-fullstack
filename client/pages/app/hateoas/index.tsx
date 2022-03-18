@@ -1,13 +1,13 @@
 import { ICrumb, useBreadcrumbs } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
 import { useEffect, useState } from "react";
-import { APIHateosGet } from "../../../api/hateos";
+import { APIHateoasGet } from "../../../api/hateoas";
 import { Button } from "../../../components/button/Button";
 import { PageWrap } from "../../../components/PageWrap";
 import { withAuth } from "../../../hocs/withAuth";
 import { useZSBreadcrumbRef } from "../../../utils/store";
 
-const Hateos = () => {
+const Hateoas = () => {
   //
   const breadcrumbRef = useZSBreadcrumbRef();
   useBreadcrumbs({ ref: breadcrumbRef, crumbs });
@@ -18,7 +18,7 @@ const Hateos = () => {
   //
   useEffect(() => {
     (async () => {
-      const res = await APIHateosGet();
+      const res = await APIHateoasGet();
       setRights(res?.data?.items);
     })();
   }, []);
@@ -27,19 +27,19 @@ const Hateos = () => {
   return (
     <PageWrap className="px-2">
       <div className="flex justify-center space-x-2">
-        {rights?.["hateos-create"] && <Button.Add label="Create" />}
+        {rights?.["hateoas-create"] && <Button.Add label="Create" />}
 
-        {rights?.["hateos-read"] && <Button.View label="Read" />}
+        {rights?.["hateoas-read"] && <Button.View label="Read" />}
 
-        {rights?.["hateos-update"] && <Button.Edit label="Update" />}
+        {rights?.["hateoas-update"] && <Button.Edit label="Update" />}
 
-        {rights?.["hateos-delete"] && <Button.Delete label="Delete" />}
+        {rights?.["hateoas-delete"] && <Button.Delete label="Delete" />}
       </div>
     </PageWrap>
   );
 };
 
-export default withAuth(Hateos);
+export default withAuth(Hateoas);
 
 //
 const crumbs: Array<ICrumb> = [
@@ -49,7 +49,7 @@ const crumbs: Array<ICrumb> = [
   },
   {
     icon: <GoogleMaterialIcons iconName="interests" />,
-    label: "HATEOS",
+    label: "HATEOAS",
   },
   {
     icon: <GoogleMaterialIcons iconName="view_list" />,

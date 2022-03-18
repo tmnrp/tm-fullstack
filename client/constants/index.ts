@@ -26,9 +26,9 @@ export const CONST_PAGES = {
       KEY: "/app/home",
       PATH: "/app/home",
     },
-    HATEOS: {
-      KEY: "/app/hateos",
-      PATH: "/app/hateos",
+    HATEOAS: {
+      KEY: "/app/hateoas",
+      PATH: "/app/hateoas",
     },
     SECURITY: {
       ROLES: {

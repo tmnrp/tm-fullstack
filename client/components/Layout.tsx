@@ -13,6 +13,8 @@ import {
 } from "../utils/store";
 import { Button } from "./button/Button";
 import { utilSignOutUser } from "../utils/browserStorage";
+import { useEffect } from "react";
+import { validateTokens } from "../utils/tokenManagement";
 
 //
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -74,6 +76,11 @@ const Header = ({
   const router = useRouter();
   const revokeTokens = useZSRevokeTokenss();
   const accessToken = useZSAccessToken();
+  useEffect(() => {
+    (async () => {
+      await validateTokens();
+    })();
+  }, []);
 
   //
   return (

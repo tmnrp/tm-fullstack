@@ -4,11 +4,13 @@ import { getAccessTokenFromReq } from "../middleware/protectedRoute.middleware";
 import jwt from "jsonwebtoken";
 
 //
-export const getHateosOverview = async (req: Request, res: Response) => {
+export const getHateoasOverview = async (req: Request, res: Response) => {
   try {
     const accessToken = getAccessTokenFromReq(req);
     const accessDetails: any = jwt.decode(accessToken);
-    const hateosRights = accessDetails?.rolesID?.rightsID?.reduce(
+    console.log("accessDetails", accessDetails);
+
+    const hateoasRights = accessDetails?.rolesID?.rightsID?.reduce(
       (acc: any, curr: any) => {
         //
         const name = curr?.name;
@@ -21,10 +23,10 @@ export const getHateosOverview = async (req: Request, res: Response) => {
     );
 
     //
-    Logger.info(hateosRights);
+    Logger.info("hateoasRights", hateoasRights);
     return res.status(200).json({
       status: "success",
-      items: hateosRights,
+      items: hateoasRights,
     });
   } catch (error) {
     Logger.error(error);

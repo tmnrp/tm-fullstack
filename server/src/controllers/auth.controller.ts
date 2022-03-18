@@ -122,9 +122,19 @@ export const insertSuper = (req: Request, res: Response) => {
 //
 export const generateAccessTokenByUserId = async (userID: string) => {
   try {
-    const user = await usersModel.findById(userID);
+    const user = await usersModel
+      .findById(userID)
+      .lean()
+      .populate({
+        path: "rolesID",
+        populate: {
+          path: "rightsID",
+        },
+      });
+
+    //
     if (user) {
-      const accessToken = jwt.sign(user.toJSON(), CONST_CONFIG_PRIVATE_KEY, {
+      const accessToken = jwt.sign(user, CONST_CONFIG_PRIVATE_KEY, {
         algorithm: "RS256",
         expiresIn: CONST_CONFIG_ACCESS_TOKEN_DURATION,
       });

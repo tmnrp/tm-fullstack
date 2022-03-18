@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import { CONST_CONFIG_PORT } from "./constants";
@@ -10,7 +10,7 @@ import { UserRouter } from "./router/users.router";
 import { connectDB } from "./utils/db";
 import { Logger } from "./utils/logger";
 import { AuthRouter } from "./router/auth.router";
-import { HateosRouter } from "./router/hateos.router";
+import { HateoasRouter } from "./router/hateoas.router";
 
 // Main
 const app: Application = express();
@@ -30,7 +30,7 @@ app.use(protectedRouteMiddleware);
 app.use(COSNT_ROUTES.RIGHTS, RightsRouter);
 app.use(COSNT_ROUTES.ROLES, RolesRouter);
 app.use(COSNT_ROUTES.USERS, UserRouter);
-app.use(COSNT_ROUTES.HATEOS, HateosRouter);
+app.use(COSNT_ROUTES.HATEOAS, HateoasRouter);
 
 //
 app.listen(process.env.PORT || CONST_CONFIG_PORT, () => {

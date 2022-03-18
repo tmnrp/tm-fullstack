@@ -1,7 +1,7 @@
 import express from "express";
-import { getHateosOverview } from "../controllers/hateos.controller";
+import { getHateoasOverview } from "../controllers/hateoas.controller";
 
-export const HateosRouter = express.Router();
+export const HateoasRouter = express.Router();
 
 /**
  * @openapi
@@ -19,4 +19,4 @@ export const HateosRouter = express.Router();
  *       "500":
  *         description: "Server error"
  */
-HateosRouter.get("/", getHateosOverview);
+HateoasRouter.get("/", getHateoasOverview);

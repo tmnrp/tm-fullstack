@@ -13,22 +13,26 @@ export const validateTokens = async () => {
   const refreshToken = utilBSGetRefreshToken();
 
   //
-  try {
-    jwt.verify(accessToken, CONST_CONFIG_PUBLIC_KEY);
-    return true;
-  } catch (error: any) {
-    console.error("validateTokens: access token expired", error);
-
-    //
+  if (!accessToken && !refreshToken) {
+    return false;
+  } else {
     try {
-      //
-      jwt.verify(refreshToken, CONST_CONFIG_PUBLIC_KEY);
-      await APIAuthRefreshAccessToken();
+      jwt.verify(accessToken, CONST_CONFIG_PUBLIC_KEY);
       return true;
     } catch (error: any) {
-      console.error("validateTokens: refresh token expired", error);
-      utilSignOutUser();
-      return false;
+      console.error("validateTokens: access token expired", error);
+
+      //
+      try {
+        //
+        jwt.verify(refreshToken, CONST_CONFIG_PUBLIC_KEY);
+        await APIAuthRefreshAccessToken();
+        return true;
+      } catch (error: any) {
+        console.error("validateTokens: refresh token expired", error);
+        utilSignOutUser();
+        return false;
+      }
     }
   }
 };

@@ -1,8 +1,8 @@
 import { axiosRequest } from "..";
 
-export const APIHateosGet = async () => {
+export const APIHateoasGet = async () => {
   try {
-    return await axiosRequest.get("/api/hateos");
+    return await axiosRequest.get("/api/hateoas");
   } catch (error: any) {
     return error;
   }

@@ -38,7 +38,7 @@ export const CONST_MODEL_NAMES = {
   rights: "rights",
   roles: "roles",
   users: "users",
-  hateos: "hateos",
+  hateoas: "hateoas",
 };
 
 //

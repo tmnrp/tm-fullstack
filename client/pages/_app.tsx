@@ -50,7 +50,7 @@ export const getExplorerContent = ({
     icon: (
       <GoogleMaterialIcons className="pr-2" iconName="admin_panel_settings" />
     ),
-    label: "Hateos",
+    label: "Hateoas",
     clickable: false,
     itemProps: {
       className: "pb-1.5",
@@ -61,7 +61,7 @@ export const getExplorerContent = ({
         icon: <GoogleMaterialIcons className="pr-2" iconName="people" />,
         itemProps: {
           className: "hover:text-primary cursor-pointer pb-1",
-          onClick: () => router.push(CONST_PAGES.APP.HATEOS.PATH),
+          onClick: () => router.push(CONST_PAGES.APP.HATEOAS.PATH),
         },
       },
     ],
