@@ -13,34 +13,31 @@ import {
 //
 export const postLogin = async (req: Request, res: Response) => {
   try {
+    // get creds from request
     const { username, password: reqPwd } = (req.body as IUsers) || {};
-    const users = await usersModel
-      .find({ username })
-      .lean()
-      .populate({
-        path: "rolesID",
-        populate: {
-          path: "rightsID",
-        },
-      });
 
-    //
+    // fetch matching user using username
+    const users = await usersModel.find({ username }).lean();
+
     if (users.length > 0) {
+      // validate password
       const { password = "", ...user } = users[0];
       const isPasswordValid = await bcryptCompare(reqPwd, password);
 
-      //
       if (isPasswordValid) {
-        const accessToken = jwt.sign(user, CONST_CONFIG_PRIVATE_KEY, {
-          algorithm: "RS256",
-          expiresIn: CONST_CONFIG_ACCESS_TOKEN_DURATION,
-        });
+        // extract user id
+        const userID = user?._id;
+        const accessToken = await generateAccessTokenByUserId(
+          userID?.toString()
+        );
+
+        // generate refresh token
         const refreshToken = jwt.sign({}, CONST_CONFIG_PRIVATE_KEY, {
           algorithm: "RS256",
           expiresIn: CONST_CONFIG_REFRESH_TOKEN_DURATION,
         });
 
-        //
+        // return response
         Logger.info(`Login success ${user._id}`);
         return res.status(200).json({
           status: "success",
@@ -48,18 +45,22 @@ export const postLogin = async (req: Request, res: Response) => {
         });
       }
     }
+
+    // return failed login
+    return res.status(401).json({
+      status: "failed",
+      message: "Invalid credentials",
+    });
   } catch (error: any) {
     Logger.error(error);
   }
-
-  //
-  return res.status(401).json({
-    status: "failed",
-    message: "Invalid credentials",
-  });
 };
 
 //
+interface IPostRefreshToken {
+  accessToken: string;
+  refreshToken: string;
+}
 export const postRefreshToken = async (req: Request, res: Response) => {
   try {
     const { accessToken, refreshToken } = (req.body as IPostRefreshToken) || {};
@@ -86,10 +87,6 @@ export const postRefreshToken = async (req: Request, res: Response) => {
     message: "Authentication required",
   });
 };
-interface IPostRefreshToken {
-  accessToken: string;
-  refreshToken: string;
-}
 
 //
 export const insertSuper = (req: Request, res: Response) => {
@@ -133,12 +130,12 @@ export const generateAccessTokenByUserId = async (userID: string) => {
       });
 
     //
-    if (user) {
-      const accessToken = jwt.sign(user, CONST_CONFIG_PRIVATE_KEY, {
+    const payload = { ...user, password: "" };
+    if (payload) {
+      const accessToken = jwt.sign(payload, CONST_CONFIG_PRIVATE_KEY, {
         algorithm: "RS256",
         expiresIn: CONST_CONFIG_ACCESS_TOKEN_DURATION,
       });
-      console.log("new accessToken", accessToken);
 
       return accessToken;
     }
