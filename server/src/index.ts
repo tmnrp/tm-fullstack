@@ -11,6 +11,7 @@ import { connectDB } from "./utils/db";
 import { Logger } from "./utils/logger";
 import { AuthRouter } from "./router/auth.router";
 import { HateoasRouter } from "./router/hateoas.router";
+import { UserSettingsRouter } from "./router/userSettings.router";
 
 // Main
 const app: Application = express();
@@ -32,6 +33,7 @@ app.use(protectedRouteMiddleware);
 app.use(COSNT_ROUTES.RIGHTS, RightsRouter);
 app.use(COSNT_ROUTES.ROLES, RolesRouter);
 app.use(COSNT_ROUTES.USERS, UserRouter);
+app.use(COSNT_ROUTES.USER_SETTINGS, UserSettingsRouter);
 app.use(COSNT_ROUTES.HATEOAS, HateoasRouter);
 
 //
