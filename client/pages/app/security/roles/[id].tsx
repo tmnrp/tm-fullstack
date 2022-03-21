@@ -67,6 +67,8 @@ const RoleDetails = () => {
         key={`key-${roleDetails}`}
         initialValues={{
           name: roleDetails?.name || "",
+          label: roleDetails?.label || "",
+          description: roleDetails?.description || "",
           rightsID: roleDetails?.rightsID?.map((right) => `${right._id}`) || [],
         }}
         onSubmit={(values: IRoles) =>
@@ -106,6 +108,41 @@ const RoleDetails = () => {
             </div>
 
             <div className="flex flex-col space-y-1">
+              <div className="tracking-widest">Label</div>
+              <input
+                className="input"
+                type="search"
+                name="label"
+                placeholder="Enter user friendly name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.label}
+              />
+
+              <span className="text-sm text-red-700">
+                {errors.label && touched.label && errors.label}
+              </span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <div className="tracking-widest">Description</div>
+              <textarea
+                className="textarea"
+                name="description"
+                placeholder="Enter description"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.description}
+              />
+
+              <span className="text-sm text-red-700">
+                {errors.description &&
+                  touched.description &&
+                  errors.description}
+              </span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
               <div className="flex justify-between tracking-widest">
                 <div>Rights</div>
                 <Button.ClearIcon
@@ -113,31 +150,29 @@ const RoleDetails = () => {
                   onClick={() => setFieldValue("rightsID", [])}
                 />
               </div>
-              <div className="flex items-center space-x-2">
-                <div className="w-full">
-                  <select
-                    className="select w-full member-relation"
-                    name="rightsID"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.rightsID}
-                    multiple
-                  >
-                    <option disabled value={""}>
-                      Select rights
-                    </option>
-                    {rights.map(({ _id, label }: IRights, i: number) => {
-                      return (
-                        <option key={i} value={_id}>
-                          {label}
-                        </option>
-                      );
-                    })}
-                  </select>
-                  <span className="text-sm text-red-700">
-                    {errors.rightsID && touched.rightsID && errors.rightsID}
-                  </span>
-                </div>
+              <div className="w-full">
+                <select
+                  className="select w-full member-relation"
+                  name="rightsID"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.rightsID}
+                  multiple
+                >
+                  <option disabled value={""}>
+                    Select rights
+                  </option>
+                  {rights.map(({ _id, label }: IRights, i: number) => {
+                    return (
+                      <option key={i} value={_id}>
+                        {label}
+                      </option>
+                    );
+                  })}
+                </select>
+                <span className="text-sm text-red-700">
+                  {errors.rightsID && touched.rightsID && errors.rightsID}
+                </span>
               </div>
             </div>
           </Form>

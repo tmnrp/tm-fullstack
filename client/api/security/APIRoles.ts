@@ -5,6 +5,8 @@ import { IRights } from "./APIRights";
 export interface IRoles {
   _id?: string | undefined;
   name: string | undefined;
+  label: string | undefined;
+  description: string | undefined;
   rightsID: Array<string>;
 }
 
@@ -12,6 +14,8 @@ export interface IRoles {
 export interface IRolesGET {
   _id?: string | undefined;
   name: string | undefined;
+  label: string | undefined;
+  description: string | undefined;
   rightsID: Array<IRights>;
 }
 
