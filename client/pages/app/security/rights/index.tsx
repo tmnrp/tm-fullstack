@@ -75,6 +75,26 @@ const getColumns = (
       dataIndex: "name",
       label: "Name",
       dataLabel: "Name",
+      columnHeaderAttributes: {
+        className: "w-24",
+      },
+      columnBodyAttributes: {},
+    },
+    {
+      id: "label",
+      dataIndex: "label",
+      label: "Label",
+      dataLabel: "Label",
+      columnHeaderAttributes: {
+        className: "w-24",
+      },
+      columnBodyAttributes: {},
+    },
+    {
+      id: "description",
+      dataIndex: "description",
+      label: "Description",
+      dataLabel: "Description",
       columnHeaderAttributes: {},
       columnBodyAttributes: {},
     },

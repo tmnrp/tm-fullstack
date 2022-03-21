@@ -94,7 +94,7 @@ const UserDetails = () => {
             <div className="flex flex-col space-y-1">
               <div className="tracking-widest">Username</div>
               <input
-                className="tm-input"
+                className="input"
                 type="search"
                 name="username"
                 placeholder="Enter username"
@@ -112,7 +112,7 @@ const UserDetails = () => {
               <div className="flex flex-col space-y-1">
                 <div className="tracking-widest">Password</div>
                 <input
-                  className="tm-input"
+                  className="input"
                   type="password"
                   name="password"
                   placeholder="Enter password"
@@ -130,7 +130,7 @@ const UserDetails = () => {
             <div className="flex flex-col space-y-1">
               <div className="tracking-widest">Sur name</div>
               <input
-                className="tm-input"
+                className="input"
                 type="search"
                 name="surName"
                 placeholder="Enter sur name"
@@ -147,7 +147,7 @@ const UserDetails = () => {
             <div className="flex flex-col space-y-1">
               <div className="tracking-widest">First name</div>
               <input
-                className="tm-input"
+                className="input"
                 type="search"
                 name="firstName"
                 placeholder="Enter first name"
@@ -164,7 +164,7 @@ const UserDetails = () => {
             <div className="flex flex-col space-y-1">
               <div className="tracking-widest">Last name</div>
               <input
-                className="tm-input"
+                className="input"
                 type="search"
                 name="lastName"
                 placeholder="Enter last name"
@@ -183,7 +183,7 @@ const UserDetails = () => {
               <div className="flex items-center space-x-2">
                 <div className="w-full">
                   <select
-                    className="w-full tm-input member-relation"
+                    className="select w-full member-relation"
                     name="rolesID"
                     onChange={handleChange}
                     onBlur={handleBlur}

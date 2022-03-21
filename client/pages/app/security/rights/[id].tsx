@@ -55,7 +55,11 @@ const RightDetails = () => {
       <Formik
         key={`key-${rightDetails}`}
         validationSchema={validationSchema}
-        initialValues={{ name: rightDetails?.name || "" }}
+        initialValues={{
+          name: rightDetails?.name || "",
+          label: rightDetails?.label || "",
+          description: rightDetails?.description || "",
+        }}
         onSubmit={(values: IRights) =>
           submitHandler({ id: `${id}`, isNewPage, values })
         }
@@ -76,7 +80,7 @@ const RightDetails = () => {
             <div className="flex flex-col space-y-1">
               <div className="tracking-widest">Right</div>
               <input
-                className="tm-input"
+                className="input"
                 type="search"
                 name="name"
                 placeholder="Enter name"
@@ -87,6 +91,41 @@ const RightDetails = () => {
 
               <span className="text-sm text-red-700">
                 {errors.name && touched.name && errors.name}
+              </span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <div className="tracking-widest">Label</div>
+              <input
+                className="input"
+                type="search"
+                name="label"
+                placeholder="Enter user friendly name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.label}
+              />
+
+              <span className="text-sm text-red-700">
+                {errors.label && touched.label && errors.label}
+              </span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <div className="tracking-widest">Description</div>
+              <textarea
+                className="textarea"
+                name="description"
+                placeholder="Enter description"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.description}
+              />
+
+              <span className="text-sm text-red-700">
+                {errors.description &&
+                  touched.description &&
+                  errors.description}
               </span>
             </div>
           </Form>

@@ -42,7 +42,7 @@ const RoleDetails = () => {
   }, [id, isNewPage]);
 
   //
-  const [rights, setRights] = useState<Array<IRoles>>([]);
+  const [rights, setRights] = useState<Array<IRights>>([]);
   useEffect(() => {
     (async () => {
       const res = await APIRightsGet();
@@ -91,7 +91,7 @@ const RoleDetails = () => {
             <div className="flex flex-col space-y-1">
               <div className="tracking-widest">Role name</div>
               <input
-                className="tm-input"
+                className="input"
                 type="search"
                 name="name"
                 placeholder="Enter role name"
@@ -116,7 +116,7 @@ const RoleDetails = () => {
               <div className="flex items-center space-x-2">
                 <div className="w-full">
                   <select
-                    className="w-full tm-input member-relation"
+                    className="select w-full member-relation"
                     name="rightsID"
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -126,11 +126,13 @@ const RoleDetails = () => {
                     <option disabled value={""}>
                       Select rights
                     </option>
-                    {rights.map((type: IRights, i: number) => (
-                      <option key={i} value={type._id}>
-                        {type?.name}
-                      </option>
-                    ))}
+                    {rights.map(({ _id, label }: IRights, i: number) => {
+                      return (
+                        <option key={i} value={_id}>
+                          {label}
+                        </option>
+                      );
+                    })}
                   </select>
                   <span className="text-sm text-red-700">
                     {errors.rightsID && touched.rightsID && errors.rightsID}

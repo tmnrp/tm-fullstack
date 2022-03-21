@@ -67,7 +67,7 @@ const Login = () => {
               <div className="flex flex-col space-y-1">
                 <div className="tracking-widest">Username</div>
                 <input
-                  className="tm-input"
+                  className="input"
                   type="search"
                   name="username"
                   placeholder="Enter username"
@@ -84,7 +84,7 @@ const Login = () => {
               <div className="flex flex-col space-y-1">
                 <div className="tracking-widest">Password</div>
                 <input
-                  className="tm-input"
+                  className="input"
                   type="password"
                   name="password"
                   placeholder="Enter password"

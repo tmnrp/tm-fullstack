@@ -3,11 +3,15 @@ import { CONST_MODEL_NAMES } from "../constants";
 
 export interface IRights {
   name: string;
+  label: string;
+  description?: string;
 }
 
 export const rightsSchema = new Schema<IRights>(
   {
     name: { type: String, unique: true },
+    label: { type: String, unique: true },
+    description: { type: String, unique: true },
   },
   {
     timestamps: true,

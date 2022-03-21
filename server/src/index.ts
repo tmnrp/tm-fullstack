@@ -26,6 +26,8 @@ connectDB();
 
 // Routers
 app.use(COSNT_ROUTES.AUTH, AuthRouter);
+
+// protected routes
 app.use(protectedRouteMiddleware);
 app.use(COSNT_ROUTES.RIGHTS, RightsRouter);
 app.use(COSNT_ROUTES.ROLES, RolesRouter);

@@ -4,6 +4,8 @@ import { axiosRequest } from "..";
 export interface IRights {
   _id?: string;
   name: string | undefined;
+  label: string | undefined;
+  description: string | undefined;
 }
 
 //
