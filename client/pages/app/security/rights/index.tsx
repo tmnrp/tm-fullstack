@@ -39,6 +39,7 @@ const Rights = () => {
   //
   return (
     <PageWrap
+      className="p-2"
       actions={
         <Button.Add
           onClick={() =>

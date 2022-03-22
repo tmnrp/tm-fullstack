@@ -15,7 +15,7 @@ export const PageWrap = ({
     <section className={`pagewrap ${className}`} {...props}>
       <PageHeader {...headerProps} actions={actions} />
 
-      <article className="p-2 overflow-auto h-[calc(100vh-130px)]">
+      <article className="overflow-auto h-[calc(100vh-130px)]">
         {children}
       </article>
     </section>

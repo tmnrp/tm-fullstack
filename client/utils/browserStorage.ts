@@ -2,6 +2,7 @@ import { NextRouter } from "next/router";
 import { useEffect } from "react";
 import { CONST_PAGES } from "../constants";
 import { useZSSetAccessToken, useZSSetRefreshToken } from "./store";
+import jwt from "jsonwebtoken";
 
 //
 export const CONST_BROWSER_STORAGE_KEYS = {
@@ -24,11 +25,11 @@ export const useSyncBSToZS = () => {
 };
 
 //
-interface IUtilSignOutUser {
+interface IUtilBSSignOutUser {
   router?: NextRouter;
   revokeTokens?: () => void;
 }
-export const utilSignOutUser = (props?: IUtilSignOutUser) => {
+export const utilBSSignOutUser = (props?: IUtilBSSignOutUser) => {
   const { router, revokeTokens } = props || {};
 
   if (typeof localStorage !== "undefined") {
@@ -94,3 +95,7 @@ export const utilBSSetTokens = (tokens: IUtilBSTokens) => {
     );
   }
 };
+
+//
+export const utilBSGetAccessTokenDetails = () =>
+  jwt.decode(utilBSGetAccessToken());

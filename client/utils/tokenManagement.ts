@@ -4,7 +4,7 @@ import { CONST_CONFIG_PUBLIC_KEY } from "../constants";
 import {
   utilBSGetAccessToken,
   utilBSGetRefreshToken,
-  utilSignOutUser,
+  utilBSSignOutUser,
 } from "./browserStorage";
 
 //
@@ -30,7 +30,7 @@ export const validateTokens = async () => {
         return true;
       } catch (error: any) {
         console.error("validateTokens: refresh token expired", error);
-        utilSignOutUser();
+        utilBSSignOutUser();
         return false;
       }
     }

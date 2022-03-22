@@ -1,6 +1,9 @@
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { utilBSGetAccessToken, utilSignOutUser } from "../utils/browserStorage";
+import {
+  utilBSGetAccessToken,
+  utilBSSignOutUser,
+} from "../utils/browserStorage";
 import { validateTokens } from "../utils/tokenManagement";
 import {
   CONST_CONFIG_BASE_URL,
@@ -43,7 +46,7 @@ axiosRequest.interceptors.response.use(
     const { status } = error?.response;
     console.error(error);
     if (status === 401) {
-      utilSignOutUser();
+      utilBSSignOutUser();
       toast.error(error?.response?.data?.message);
     } else {
       toast.error(

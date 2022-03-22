@@ -14,7 +14,7 @@ const Settings = () => {
 
   //
   return (
-    <PageWrap>
+    <PageWrap className="p-2">
       <div className="flex items-center justify-center">
         <div className="w-full">
           <div className="flex items-center space-y-1 space-x-2">

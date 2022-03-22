@@ -12,9 +12,13 @@ import {
   useZSAccessToken,
 } from "../utils/store";
 import { Button } from "./button/Button";
-import { utilSignOutUser } from "../utils/browserStorage";
+import {
+  utilBSGetAccessTokenDetails,
+  utilBSSignOutUser,
+} from "../utils/browserStorage";
 import { useEffect } from "react";
 import { validateTokens } from "../utils/tokenManagement";
+import Link from "next/link";
 
 //
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -40,7 +44,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
       <section className="flex flex-1 overflow-auto relative">
         <Sidebar
           className={`
-          pt-4 h-full bg-surface-light-1 dark:bg-surface-dark-1
+            z-10 pt-4 h-full bg-surface-light-1 dark:bg-surface-dark-1
             ${isExpanded ? "w-10/12 sm:w-60" : ""}
             absolute sm:static
           `}
@@ -73,14 +77,18 @@ const Header = ({
   isExpanded: boolean;
   toggle: () => void;
 }) => {
-  const router = useRouter();
-  const revokeTokens = useZSRevokeTokenss();
+  //
   const accessToken = useZSAccessToken();
   useEffect(() => {
     (async () => {
       await validateTokens();
     })();
   }, []);
+
+  //
+  const router = useRouter();
+  const revokeTokens = useZSRevokeTokenss();
+  const accessTokenDetails: any = utilBSGetAccessTokenDetails();
 
   //
   return (
@@ -101,14 +109,29 @@ const Header = ({
       <div className="flex">
         <div className="mr-2">
           {accessToken ? (
-            <Button
-              key={`logout-${accessToken}`}
-              className={`button px-2 warning`}
-              onClick={() => utilSignOutUser({ router, revokeTokens })}
-            >
-              <GoogleMaterialIcons className="text-lg" iconName="logout" />
-              <span className="hidden md:block uppercase text-sm">logout</span>
-            </Button>
+            <div className="flex items-center space-x-2">
+              {accessTokenDetails && (
+                <Link href={CONST_PAGES.APP.USER_PROFILE.PATH}>
+                  <a
+                    className={`
+                  text-primary text-lg uppercase tracking-widest font-semibold
+                    cursor-pointer
+                  `}
+                  >
+                    {accessTokenDetails?.firstName}
+                  </a>
+                </Link>
+              )}
+
+              <Button
+                key={`logout-${accessToken}`}
+                className={`button px-2 warning`}
+                onClick={() => utilBSSignOutUser({ router, revokeTokens })}
+              >
+                <GoogleMaterialIcons className="text-lg" iconName="logout" />
+                <p className="hidden md:block uppercase text-sm">logout</p>
+              </Button>
+            </div>
           ) : (
             <Button
               key={`login-${accessToken}`}
@@ -127,26 +150,13 @@ const Header = ({
 };
 
 //
-const Logo = () => {
-  const router = useRouter();
-
-  //
-  return (
-    <div
-      className={`
-        text-xl font-extrabold tracking-widest cursor-pointer
-        ${
-          router.pathname === CONST_PAGES.APP.HOME.PATH
-            ? "text-emerald-600"
-            : ""
-        }
-      `}
-      onClick={() => router.push(CONST_PAGES.APP.HOME.PATH)}
-    >
+const Logo = () => (
+  <Link href={CONST_PAGES.APP.HOME.PATH}>
+    <a className="text-xl font-extrabold tracking-widest cursor-pointer">
       {CONST_LOGO}
-    </div>
-  );
-};
+    </a>
+  </Link>
+);
 
 //
 const Footer = ({ className }: { className: string }) => (

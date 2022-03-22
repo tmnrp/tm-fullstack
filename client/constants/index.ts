@@ -22,6 +22,10 @@ export const CONST_PAGES = {
   },
   APP: {
     KEY: "/app",
+    USER_PROFILE: {
+      KEY: "/app/user-profile",
+      PATH: "/app/user-profile",
+    },
     HOME: {
       KEY: "/app/home",
       PATH: "/app/home",

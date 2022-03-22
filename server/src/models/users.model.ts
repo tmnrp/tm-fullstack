@@ -1,6 +1,9 @@
 import { model, Schema } from "mongoose";
 import { CONST_MODEL_NAMES } from "../constants";
 
+export interface ISettings {
+  [key: string]: string;
+}
 export interface IUsers {
   username: string;
   password: string;
@@ -8,6 +11,7 @@ export interface IUsers {
   surName: string;
   firstName: string;
   lastName: string;
+  settings: ISettings;
 }
 
 export const usersSchema = new Schema<IUsers>(
@@ -17,6 +21,7 @@ export const usersSchema = new Schema<IUsers>(
     surName: { type: String },
     firstName: { type: String },
     lastName: { type: String },
+    settings: { type: Object },
     rolesID: { type: Schema.Types.ObjectId, ref: CONST_MODEL_NAMES.roles },
   },
   {
