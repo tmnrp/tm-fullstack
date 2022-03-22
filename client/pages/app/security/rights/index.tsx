@@ -39,7 +39,6 @@ const Rights = () => {
   //
   return (
     <PageWrap
-      className="px-2"
       actions={
         <Button.Add
           onClick={() =>
@@ -136,11 +135,11 @@ const crumbs: Array<ICrumb> = [
     label: "Home",
   },
   {
-    icon: <GoogleMaterialIcons iconName="interests" />,
+    icon: <GoogleMaterialIcons iconName="checklist_rtl" />,
     label: "Rights",
   },
   {
     icon: <GoogleMaterialIcons iconName="view_list" />,
-    label: "Details",
+    label: "Overview",
   },
 ];

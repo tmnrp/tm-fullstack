@@ -25,7 +25,7 @@ const Hateoas = () => {
 
   //
   return (
-    <PageWrap className="px-2">
+    <PageWrap>
       <div className="flex justify-center space-x-2">
         {rights?.["hateoas-create"] && <Button.Add label="Create" />}
 
@@ -48,7 +48,7 @@ const crumbs: Array<ICrumb> = [
     label: "Home",
   },
   {
-    icon: <GoogleMaterialIcons iconName="interests" />,
+    icon: <GoogleMaterialIcons iconName="admin_panel_settings" />,
     label: "HATEOAS",
   },
   {

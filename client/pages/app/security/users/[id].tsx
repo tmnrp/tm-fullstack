@@ -255,11 +255,11 @@ const crumbs: Array<ICrumb> = [
     label: "Home",
   },
   {
-    icon: <GoogleMaterialIcons iconName="interests" />,
+    icon: <GoogleMaterialIcons iconName="badge" />,
     label: "Users",
   },
   {
-    icon: <GoogleMaterialIcons iconName="view_list" />,
+    icon: <GoogleMaterialIcons iconName="note_alt" />,
     label: "Details",
   },
 ];

@@ -37,7 +37,6 @@ const Users = () => {
   //
   return (
     <PageWrap
-      className="px-2"
       actions={
         <Button.Add
           onClick={() =>
@@ -156,7 +155,7 @@ const crumbs: Array<ICrumb> = [
     label: "Home",
   },
   {
-    icon: <GoogleMaterialIcons iconName="interests" />,
+    icon: <GoogleMaterialIcons iconName="badge" />,
     label: "Users",
   },
   {

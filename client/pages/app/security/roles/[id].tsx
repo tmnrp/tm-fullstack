@@ -218,11 +218,11 @@ const crumbs: Array<ICrumb> = [
     label: "Home",
   },
   {
-    icon: <GoogleMaterialIcons iconName="interests" />,
+    icon: <GoogleMaterialIcons iconName="people" />,
     label: "Roles",
   },
   {
-    icon: <GoogleMaterialIcons iconName="view_list" />,
+    icon: <GoogleMaterialIcons iconName="note_alt" />,
     label: "Details",
   },
 ];
