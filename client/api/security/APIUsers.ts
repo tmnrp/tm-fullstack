@@ -50,9 +50,12 @@ export const APIUsersPost = async (values: IUsers) => {
 };
 
 //
-export const APIUsersPut = async (id: string, values: IUsers) => {
+export const APIUsersPut = async (
+  id: string,
+  { password, ...payload }: IUsers
+) => {
   try {
-    return await axiosRequest.put(`/api/users/${id}`, values);
+    return await axiosRequest.put(`/api/users/${id}`, payload);
   } catch (error: any) {
     return error;
   }

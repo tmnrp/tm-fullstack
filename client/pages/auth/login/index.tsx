@@ -9,6 +9,7 @@ import {
   useZSSetAccessToken,
   useZSSetRefreshToken,
 } from "../../../utils/store";
+import axios from "axios";
 
 //
 const Login = () => {
@@ -26,13 +27,17 @@ const Login = () => {
         credPwd: values.password,
       });
 
-      const tokens: IUtilBSTokens = res?.data?.items;
+      //
+      if (!axios.isAxiosError(res)) {
+        const tokens: IUtilBSTokens = res?.data?.items;
 
-      if (tokens) {
-        utilBSSetTokens(tokens);
-        setAccessToken(tokens?.accessToken);
-        setRefreshToken(tokens?.refreshToken);
-        router.push(CONST_PAGES.APP.HOME.PATH);
+        //
+        if (tokens) {
+          utilBSSetTokens(tokens);
+          setAccessToken(tokens?.accessToken);
+          setRefreshToken(tokens?.refreshToken);
+          router.push(CONST_PAGES.APP.HOME.PATH);
+        }
       }
     },
     [router, setAccessToken, setRefreshToken]

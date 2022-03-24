@@ -70,7 +70,12 @@ export const insertUser = (req: Request, res: Response) => {
 //
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    const result = await usersModel.findByIdAndUpdate(req.params.id, req.body);
+    console.log({ before: req.body });
+
+    const { password, ...payload } = req.body;
+    console.log({ after: payload });
+
+    const result = await usersModel.findByIdAndUpdate(req.params.id, payload);
     Logger.info(result);
     return res.status(200).json({
       status: "success",
