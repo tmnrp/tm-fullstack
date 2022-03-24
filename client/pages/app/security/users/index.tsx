@@ -115,6 +115,16 @@ const getColumns = (
       dataIndex: "lastName",
       label: "Last name",
       dataLabel: "Last name",
+      columnHeaderAttributes: {
+        className: "w-24",
+      },
+      columnBodyAttributes: {},
+    },
+    {
+      id: "email",
+      dataIndex: "email",
+      label: "E-Mail",
+      dataLabel: "E-Mail",
       columnHeaderAttributes: {},
       columnBodyAttributes: {},
     },

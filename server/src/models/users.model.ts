@@ -11,6 +11,7 @@ export interface IUsers {
   surName: string;
   firstName: string;
   lastName: string;
+  email: string;
   settings: ISettings;
 }
 
@@ -21,6 +22,7 @@ export const usersSchema = new Schema<IUsers>(
     surName: { type: String },
     firstName: { type: String },
     lastName: { type: String },
+    email: { type: String },
     settings: { type: Object },
     rolesID: { type: Schema.Types.ObjectId, ref: CONST_MODEL_NAMES.roles },
   },

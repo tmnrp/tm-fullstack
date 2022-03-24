@@ -71,6 +71,7 @@ const UserDetails = () => {
           surName: userDetails?.surName || "",
           firstName: userDetails?.firstName || "",
           lastName: userDetails?.lastName || "",
+          email: userDetails?.email || "",
           rolesID: userDetails?.rolesID?._id || "",
         }}
         onSubmit={(values: IUsers) =>
@@ -175,6 +176,23 @@ const UserDetails = () => {
 
               <span className="text-sm text-red-700">
                 {errors.lastName && touched.lastName && errors.lastName}
+              </span>
+            </div>
+
+            <div className="flex flex-col space-y-1">
+              <div className="tracking-widest">Email</div>
+              <input
+                className="input"
+                type="search"
+                name="email"
+                placeholder="Enter email"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+              />
+
+              <span className="text-sm text-red-700">
+                {errors.email && touched.email && errors.email}
               </span>
             </div>
 

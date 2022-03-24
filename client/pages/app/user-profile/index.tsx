@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+import md5 from "md5";
 import { ICrumb, useBreadcrumbs } from "@tmnrp/react-breadcrumbs";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
 import { PageWrap } from "../../../components/PageWrap";
@@ -14,6 +16,7 @@ const UserProfile = () => {
   const accessTokenDetails: any = utilBSGetAccessTokenDetails();
   const roleLabel = accessTokenDetails?.rolesID?.label;
   const rights = accessTokenDetails?.rolesID?.rightsID;
+  const email = accessTokenDetails?.email || "";
 
   //
   return (
@@ -29,7 +32,17 @@ const UserProfile = () => {
             flex items-center space-x-4
           `}
         >
-          <div
+          <img
+            alt=""
+            className={`
+              flex items-center justify-center
+              h-28 sm:h-32 w-28 sm:w-32
+              bg-surface-light-1 dark:bg-surface-dark-1
+              rounded-full shadow-lg
+            `}
+            src={`https://www.gravatar.com/avatar/${md5(email)}?d=retro`}
+          />
+          {/* <div
             className={`
               flex items-center justify-center
               h-28 sm:h-32 w-28 sm:w-32
@@ -38,7 +51,7 @@ const UserProfile = () => {
             `}
           >
             Profile
-          </div>
+          </div> */}
           <div
             className={`
               uppercase font-bold tracking-widest text-xl

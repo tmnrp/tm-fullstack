@@ -8,6 +8,7 @@ export interface IUsers {
   surName: string | undefined;
   firstName: string | undefined;
   lastName: string | undefined;
+  email: string | undefined;
   rolesID: string | undefined;
 }
 
@@ -17,6 +18,7 @@ export interface IUsersGET {
   surName: string | undefined;
   firstName: string | undefined;
   lastName: string | undefined;
+  email: string | undefined;
   rolesID: IRoles;
 }
 
