@@ -21,7 +21,7 @@ module.exports = {
         //
         "surface-light-1": "#ffffff",
         "surface-light-2": "#F8F8F8",
-        "surface-light-3": "#e5e7eb",
+        "surface-light-3": "#cfd3da",
 
         //
         "surface-dark-1": "#000000",

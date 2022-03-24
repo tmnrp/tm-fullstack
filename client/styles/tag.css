@@ -1,0 +1,17 @@
+.tag {
+  @apply inline-flex p-1 rounded;
+  @apply border border-surface-light-3;
+}
+
+.tag.info {
+  @apply border-info text-info;
+}
+.tag.warning {
+  @apply border-warning text-warning;
+}
+.tag.success {
+  @apply border-success text-success;
+}
+.tag.danger {
+  @apply border-danger text-danger;
+}
