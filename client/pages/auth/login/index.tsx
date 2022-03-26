@@ -3,9 +3,14 @@ import { Form, Formik } from "formik";
 import { useCallback } from "react";
 import { useRouter } from "next/router";
 import { CONST_PAGES } from "../../../constants";
-import { IUtilBSTokens, utilBSSetTokens } from "../../../utils/browserStorage";
+import {
+  IUtilBSTokens,
+  utilBSGetUserSettings,
+  utilBSSetTokens,
+  utilBSSetUserSettingsFromAccessToken,
+} from "../../../utils/browserStorage";
 import { APIAuthPostLogin } from "../../../api/security/APIAuth";
-import { useZSSetAccessToken } from "../../../utils/store";
+import { useZSSetAccessToken, useZSSetThemeMode } from "../../../utils/store";
 import axios from "axios";
 
 //
@@ -14,6 +19,9 @@ const Login = () => {
 
   //
   const setAccessToken = useZSSetAccessToken();
+
+  //
+  const setThemeMode = useZSSetThemeMode();
 
   //
   const submitHandler = useCallback(
@@ -34,11 +42,16 @@ const Login = () => {
           setAccessToken(tokens?.accessToken);
 
           //
+          utilBSSetUserSettingsFromAccessToken();
+          const userSettings: any = utilBSGetUserSettings();
+          setThemeMode(userSettings?.themeMode);
+
+          //
           router.push(CONST_PAGES.APP.HOME.PATH);
         }
       }
     },
-    [router, setAccessToken]
+    [router, setAccessToken, setThemeMode]
   );
 
   //

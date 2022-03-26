@@ -1,5 +1,10 @@
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
 import { useEffect } from "react";
+import { APIUsersPutSettings } from "../api/security/APIUsers";
+import {
+  utilBSGetAccessTokenDetails,
+  utilBSGetUserSettings,
+} from "../utils/browserStorage";
 import { useZSSetThemeMode, useZSThemeMode } from "../utils/store";
 
 //
@@ -37,4 +42,22 @@ export const ThemeSwitcher = () => {
       />
     </div>
   );
+};
+
+//
+export const useOnThemeChange = () => {
+  const themeMode = useZSThemeMode();
+
+  //
+  useEffect(() => {
+    (async () => {
+      const userSettings: any = utilBSGetUserSettings();
+      const accessTokenDetails: any = utilBSGetAccessTokenDetails();
+      if (userSettings.themeMode !== themeMode) {
+        const res = await APIUsersPutSettings(accessTokenDetails?._id, {
+          themeMode,
+        });
+      }
+    })();
+  }, [themeMode]);
 };

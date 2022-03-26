@@ -25,8 +25,6 @@ const _App = ({ Component, pageProps }: AppProps) => {
   //
   useSyncBSToZS();
 
-  useSetGlobalNetworkUpdates();
-
   //
   const breadcrumbRef = useRef<IBreadcrumbsMethods>(null);
   const setBreadcrumbRef = useZSSetBreadcrumbRef();
@@ -48,32 +46,6 @@ const _App = ({ Component, pageProps }: AppProps) => {
 
 //
 export default _App;
-
-//
-const useSetGlobalNetworkUpdates = () => {
-  const accessTokenDetails: any = utilBSGetAccessTokenDetails();
-  const userSettings: any = utilBSGetUserSettings();
-  const themeMode = useZSThemeMode();
-  useEffect(() => {
-    (async () => {
-      if (
-        themeMode &&
-        userSettings.themeMode !== themeMode &&
-        accessTokenDetails?._id
-      ) {
-        const res = await APIUsersPutSettings(accessTokenDetails?._id, {
-          themeMode,
-        });
-
-        //
-        if (!axios.isAxiosError(res)) {
-          const userSettings = utilBSGetUserSettings();
-          utilBSSetUserSettings({ ...userSettings, themeMode });
-        }
-      }
-    })();
-  }, [userSettings.themeMode, accessTokenDetails?._id, themeMode]);
-};
 
 //
 export const getExplorerContent = ({

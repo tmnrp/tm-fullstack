@@ -26,8 +26,6 @@ interface IGlobalState {
 
 //
 export const useZStore = create<IGlobalState>((set: any) => {
-  const userSettings: any = utilBSGetUserSettings();
-
   //
   return {
     isExpanded: false,
@@ -35,7 +33,7 @@ export const useZStore = create<IGlobalState>((set: any) => {
       set((state: IGlobalState) => ({ isExpanded: !state.isExpanded })),
 
     //
-    themeMode: userSettings?.themeMode || "dark",
+    themeMode: "dark",
     setThemeMode: (themeMode: string) => set(() => ({ themeMode })),
 
     //
