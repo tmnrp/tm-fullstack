@@ -1,13 +1,14 @@
 import { NextRouter } from "next/router";
 import { useEffect } from "react";
 import { CONST_PAGES } from "../constants";
-import { useZSSetAccessToken, useZSSetRefreshToken } from "./store";
+import { useZSSetAccessToken } from "./store";
 import jwt from "jsonwebtoken";
 
 //
 export const CONST_BROWSER_STORAGE_KEYS = {
   "access-token": "access-token",
   "refresh-token": "refresh-token",
+  "user-settings": "user-settings",
 };
 
 /**
@@ -18,10 +19,6 @@ export const useSyncBSToZS = () => {
   //
   const setAccessToken = useZSSetAccessToken();
   useEffect(() => setAccessToken(utilBSGetAccessToken()), [setAccessToken]);
-
-  //
-  const setRefreshToken = useZSSetRefreshToken();
-  useEffect(() => setRefreshToken(utilBSGetRefreshToken()), [setRefreshToken]);
 };
 
 //
@@ -99,3 +96,35 @@ export const utilBSSetTokens = (tokens: IUtilBSTokens) => {
 //
 export const utilBSGetAccessTokenDetails = () =>
   jwt.decode(utilBSGetAccessToken());
+
+//
+export const utilBSGetUserSettings = () => {
+  //
+  if (typeof localStorage !== "undefined") {
+    const tokens = localStorage.getItem(
+      CONST_BROWSER_STORAGE_KEYS["user-settings"]
+    );
+    if (tokens) {
+      return JSON.parse(tokens);
+    }
+  }
+
+  //
+  return {};
+};
+
+//
+export const utilBSSetUserSettingsFromAccessToken = () => {
+  const accessTokenDetails: any = utilBSGetAccessTokenDetails();
+  utilBSSetUserSettings(accessTokenDetails?.settings);
+};
+
+//
+export const utilBSSetUserSettings = (
+  settings: { [key: string]: any } = {}
+) => {
+  localStorage.setItem(
+    CONST_BROWSER_STORAGE_KEYS["user-settings"],
+    JSON.stringify(settings)
+  );
+};

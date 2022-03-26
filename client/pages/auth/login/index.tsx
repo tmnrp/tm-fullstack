@@ -5,10 +5,7 @@ import { useRouter } from "next/router";
 import { CONST_PAGES } from "../../../constants";
 import { IUtilBSTokens, utilBSSetTokens } from "../../../utils/browserStorage";
 import { APIAuthPostLogin } from "../../../api/security/APIAuth";
-import {
-  useZSSetAccessToken,
-  useZSSetRefreshToken,
-} from "../../../utils/store";
+import { useZSSetAccessToken } from "../../../utils/store";
 import axios from "axios";
 
 //
@@ -17,7 +14,6 @@ const Login = () => {
 
   //
   const setAccessToken = useZSSetAccessToken();
-  const setRefreshToken = useZSSetRefreshToken();
 
   //
   const submitHandler = useCallback(
@@ -33,14 +29,16 @@ const Login = () => {
 
         //
         if (tokens) {
+          //
           utilBSSetTokens(tokens);
           setAccessToken(tokens?.accessToken);
-          setRefreshToken(tokens?.refreshToken);
+
+          //
           router.push(CONST_PAGES.APP.HOME.PATH);
         }
       }
     },
-    [router, setAccessToken, setRefreshToken]
+    [router, setAccessToken]
   );
 
   //

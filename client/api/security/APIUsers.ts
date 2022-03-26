@@ -9,6 +9,7 @@ export interface IUsers {
   firstName: string | undefined;
   lastName: string | undefined;
   email: string | undefined;
+  settings: { [key: string]: any };
   rolesID: string | undefined;
 }
 
@@ -56,6 +57,18 @@ export const APIUsersPut = async (
 ) => {
   try {
     return await axiosRequest.put(`/api/users/${id}`, payload);
+  } catch (error: any) {
+    return error;
+  }
+};
+
+//
+export const APIUsersPutSettings = async (
+  id: string,
+  settings: { [key: string]: any }
+) => {
+  try {
+    return await axiosRequest.put(`/api/users/${id}`, settings);
   } catch (error: any) {
     return error;
   }

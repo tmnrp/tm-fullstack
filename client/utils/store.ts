@@ -1,6 +1,7 @@
 import create from "zustand";
 import { IBreadcrumbsMethods } from "@tmnrp/react-breadcrumbs";
 import { RefObject } from "react";
+import { utilBSGetUserSettings } from "./browserStorage";
 
 //
 interface IGlobalState {
@@ -19,34 +20,35 @@ interface IGlobalState {
 
   //
   accessToken: string;
-  refreshToken: string;
   setAccessToken: (user: any) => void;
-  setRefreshToken: (user: any) => void;
   revokeTokens: () => void;
 }
 
 //
-export const useZStore = create<IGlobalState>((set: any) => ({
-  isExpanded: false,
-  toggle: () =>
-    set((state: IGlobalState) => ({ isExpanded: !state.isExpanded })),
+export const useZStore = create<IGlobalState>((set: any) => {
+  const userSettings: any = utilBSGetUserSettings();
 
   //
-  themeMode: "dark",
-  setThemeMode: (themeMode: string) => set(() => ({ themeMode })),
+  return {
+    isExpanded: false,
+    toggle: () =>
+      set((state: IGlobalState) => ({ isExpanded: !state.isExpanded })),
 
-  //
-  breadcrumbRef: undefined,
-  setBreadcrumbRef: (breadcrumbRef: RefObject<IBreadcrumbsMethods>) =>
-    set(() => ({ breadcrumbRef })),
+    //
+    themeMode: userSettings?.themeMode || "dark",
+    setThemeMode: (themeMode: string) => set(() => ({ themeMode })),
 
-  //
-  accessToken: "",
-  refreshToken: "",
-  setAccessToken: (accessToken) => set(() => ({ accessToken })),
-  setRefreshToken: (refreshToken) => set(() => ({ refreshToken })),
-  revokeTokens: () => set(() => ({ accessToken: "", refreshToken: "" })),
-}));
+    //
+    breadcrumbRef: undefined,
+    setBreadcrumbRef: (breadcrumbRef: RefObject<IBreadcrumbsMethods>) =>
+      set(() => ({ breadcrumbRef })),
+
+    //
+    accessToken: "",
+    setAccessToken: (accessToken) => set(() => ({ accessToken })),
+    revokeTokens: () => set(() => ({ accessToken: "", refreshToken: "" })),
+  };
+});
 
 //
 export const useZSIsExpanded = () => useZStore((state) => state.isExpanded);
@@ -64,10 +66,7 @@ export const useZSSetBreadcrumbRef = () =>
 
 //
 export const useZSAccessToken = () => useZStore((state) => state.accessToken);
-export const useZSRefreshToken = () => useZStore((state) => state.refreshToken);
 export const useZSSetAccessToken = () =>
   useZStore((state) => state.setAccessToken);
-export const useZSSetRefreshToken = () =>
-  useZStore((state) => state.setRefreshToken);
 export const useZSRevokeTokenss = () =>
   useZStore((state) => state.revokeTokens);

@@ -70,16 +70,14 @@ export const insertUser = (req: Request, res: Response) => {
 //
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    console.log({ before: req.body });
-
     const { password, ...payload } = req.body;
-    console.log({ after: payload });
-
     const result = await usersModel.findByIdAndUpdate(req.params.id, payload);
     Logger.info(result);
+
+    //
     return res.status(200).json({
       status: "success",
-      message: `Successfully updated user ${req.body.username}`,
+      message: `Successfully updated user ${result?.username}`,
     });
   } catch (error) {
     Logger.error(error);
