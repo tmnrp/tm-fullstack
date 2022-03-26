@@ -1,9 +1,11 @@
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
+import axios from "axios";
 import { useEffect } from "react";
 import { APIUsersPutSettings } from "../api/security/APIUsers";
 import {
   utilBSGetAccessTokenDetails,
   utilBSGetUserSettings,
+  utilBSSetUserSettings,
 } from "../utils/browserStorage";
 import { useZSSetThemeMode, useZSThemeMode } from "../utils/store";
 
@@ -16,6 +18,8 @@ export const CONST_THEME_MODES = {
 //
 export const ThemeSwitcher = () => {
   const themeMode = useZSThemeMode();
+  console.log({ themeMode });
+
   const setThemeMode = useZSSetThemeMode();
 
   //
@@ -31,7 +35,12 @@ export const ThemeSwitcher = () => {
   return (
     <div
       className="flex items-center px-1 cursor-pointer text-default-hover"
-      onClick={() => setThemeMode(themeMode === "dark" ? "light" : "dark")}
+      onClick={() => {
+        onThemeChangeHandler({
+          themeMode: themeMode === "dark" ? "light" : "dark",
+          setThemeMode,
+        });
+      }}
     >
       <GoogleMaterialIcons
         iconName={`${
@@ -45,19 +54,26 @@ export const ThemeSwitcher = () => {
 };
 
 //
-export const useOnThemeChange = () => {
-  const themeMode = useZSThemeMode();
+export const onThemeChangeHandler = async ({
+  themeMode,
+  setThemeMode,
+}: any) => {
+  const userSettings: any = utilBSGetUserSettings();
+  const accessTokenDetails: any = utilBSGetAccessTokenDetails();
+  if (accessTokenDetails?._id) {
+    const res = await APIUsersPutSettings(accessTokenDetails?._id, {
+      settings: { ...userSettings, themeMode },
+    });
 
-  //
-  useEffect(() => {
-    (async () => {
+    if (!axios.isAxiosError(res)) {
+      //
       const userSettings: any = utilBSGetUserSettings();
-      const accessTokenDetails: any = utilBSGetAccessTokenDetails();
-      if (userSettings.themeMode !== themeMode) {
-        const res = await APIUsersPutSettings(accessTokenDetails?._id, {
-          themeMode,
-        });
-      }
-    })();
-  }, [themeMode]);
+      utilBSSetUserSettings({ ...userSettings, themeMode });
+
+      //
+      setThemeMode(themeMode);
+    }
+  } else {
+    setThemeMode(themeMode);
+  }
 };

@@ -1,8 +1,9 @@
+import jwt from "jsonwebtoken";
 import { NextRouter } from "next/router";
 import { useEffect } from "react";
 import { CONST_PAGES } from "../constants";
-import { useZSSetAccessToken } from "./store";
-import jwt from "jsonwebtoken";
+import { useZSSetAccessToken, useZSSetThemeMode } from "./store";
+import { CONST_THEME_MODES } from "../components/ThemeSwitcher";
 
 //
 export const CONST_BROWSER_STORAGE_KEYS = {
@@ -19,6 +20,14 @@ export const useSyncBSToZS = () => {
   //
   const setAccessToken = useZSSetAccessToken();
   useEffect(() => setAccessToken(utilBSGetAccessToken()), [setAccessToken]);
+
+  //
+  const userSettings = utilBSGetUserSettings();
+  const setThemeMode = useZSSetThemeMode();
+  useEffect(
+    () => setThemeMode(userSettings?.themeMode || CONST_THEME_MODES.DARK),
+    [setThemeMode, userSettings?.themeMode]
+  );
 };
 
 //

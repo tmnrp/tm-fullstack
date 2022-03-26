@@ -10,15 +10,8 @@ import { Layout } from "../components/Layout";
 import { CONST_PAGES } from "../constants";
 import { IBreadcrumbsMethods } from "@tmnrp/react-breadcrumbs";
 import { useEffect, useRef } from "react";
-import { useZSSetBreadcrumbRef, useZSThemeMode } from "../utils/store";
-import {
-  useSyncBSToZS,
-  utilBSGetAccessTokenDetails,
-  utilBSGetUserSettings,
-  utilBSSetUserSettings,
-} from "../utils/browserStorage";
-import { APIUsersPutSettings } from "../api/security/APIUsers";
-import axios from "axios";
+import { useZSSetBreadcrumbRef } from "../utils/store";
+import { useSyncBSToZS } from "../utils/browserStorage";
 
 //
 const _App = ({ Component, pageProps }: AppProps) => {

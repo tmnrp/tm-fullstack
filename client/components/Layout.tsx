@@ -143,6 +143,7 @@ const Header = ({
             </Button>
           )}
         </div>
+
         <ThemeSwitcher />
       </div>
     </header>
