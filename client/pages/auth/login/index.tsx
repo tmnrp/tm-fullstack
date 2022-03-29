@@ -10,11 +10,16 @@ import {
   utilBSSetUserSettingsFromAccessToken,
 } from "../../../utils/browserStorage";
 import { APIAuthPostLogin } from "../../../api/security/APIAuth";
-import { useZSSetAccessToken, useZSSetThemeMode } from "../../../utils/store";
+import {
+  useZSProgressbarRef,
+  useZSSetAccessToken,
+  useZSSetThemeMode,
+} from "../../../utils/store";
 import axios from "axios";
 
 //
 const Login = () => {
+  const progressbarRef = useZSProgressbarRef();
   const router = useRouter();
 
   //
@@ -26,32 +31,40 @@ const Login = () => {
   //
   const submitHandler = useCallback(
     async (values: IUserCreds) => {
-      const res = await APIAuthPostLogin({
-        credNm: values.username,
-        credPwd: values.password,
-      });
-
-      //
-      if (!axios.isAxiosError(res)) {
-        const tokens: IUtilBSTokens = res?.data?.items;
+      try {
+        progressbarRef?.current?.activate();
+        const res = await APIAuthPostLogin({
+          credNm: values.username,
+          credPwd: values.password,
+        });
 
         //
-        if (tokens) {
-          //
-          utilBSSetTokens(tokens);
-          setAccessToken(tokens?.accessToken);
+        if (!axios.isAxiosError(res)) {
+          const tokens: IUtilBSTokens = res?.data?.items;
 
           //
-          utilBSSetUserSettingsFromAccessToken();
-          const userSettings: any = utilBSGetUserSettings();
-          setThemeMode(userSettings?.themeMode);
+          if (tokens) {
+            //
+            utilBSSetTokens(tokens);
+            setAccessToken(tokens?.accessToken);
 
-          //
-          router.push(CONST_PAGES.APP.HOME.PATH);
+            //
+            utilBSSetUserSettingsFromAccessToken();
+            const userSettings: any = utilBSGetUserSettings();
+            setThemeMode(userSettings?.themeMode);
+
+            //
+            router.push(CONST_PAGES.APP.HOME.PATH);
+          }
         }
+
+        //
+        progressbarRef?.current?.kill();
+      } catch (error: any) {
+        progressbarRef?.current?.kill();
       }
     },
-    [router, setAccessToken, setThemeMode]
+    [progressbarRef, router, setAccessToken, setThemeMode]
   );
 
   //
