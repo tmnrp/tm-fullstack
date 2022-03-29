@@ -18,8 +18,6 @@ export const CONST_THEME_MODES = {
 //
 export const ThemeSwitcher = () => {
   const themeMode = useZSThemeMode();
-  console.log({ themeMode });
-
   const setThemeMode = useZSSetThemeMode();
 
   //
@@ -57,7 +55,10 @@ export const ThemeSwitcher = () => {
 export const onThemeChangeHandler = async ({
   themeMode,
   setThemeMode,
-}: any) => {
+}: {
+  themeMode: string;
+  setThemeMode: (themeMode: string) => void;
+}) => {
   const userSettings: any = utilBSGetUserSettings();
   const accessTokenDetails: any = utilBSGetAccessTokenDetails();
   if (accessTokenDetails?._id) {

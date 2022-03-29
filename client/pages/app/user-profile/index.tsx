@@ -5,9 +5,17 @@ import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
 import { PageWrap } from "../../../components/PageWrap";
 import { Tag, TAG_TYPES } from "../../../components/tag/Tag";
 import { utilBSGetAccessTokenDetails } from "../../../utils/browserStorage";
-import { useZSBreadcrumbRef, useZSThemeMode } from "../../../utils/store";
+import {
+  useZSBreadcrumbRef,
+  useZSSetThemeMode,
+  useZSThemeMode,
+} from "../../../utils/store";
 import { Button } from "../../../components/button/Button";
 import { withAuth } from "../../../hocs/withAuth";
+import {
+  CONST_THEME_MODES,
+  onThemeChangeHandler,
+} from "../../../components/ThemeSwitcher";
 
 const UserProfile = () => {
   //
@@ -19,6 +27,10 @@ const UserProfile = () => {
   const roleLabel = accessTokenDetails?.rolesID?.label;
   const rights = accessTokenDetails?.rolesID?.rightsID;
   const email = accessTokenDetails?.email || "";
+
+  //
+  const themeMode = useZSThemeMode();
+  const setThemeMode = useZSSetThemeMode();
 
   //
   return (
@@ -97,10 +109,40 @@ const UserProfile = () => {
             Theme:
           </span>
           <span className="inline-flex space-x-2 uppercase font-semibold tracking-widest">
-            <Button className="px-2 py-1 bg-surface-light-1 text-surface-dark-1">
+            <Button
+              className={`
+                px-2 py-1 bg-surface-light-1 text-surface-dark-1
+                ${
+                  themeMode === CONST_THEME_MODES.LIGHT
+                    ? "border-2 border-primary"
+                    : ""
+                }
+              `}
+              onClick={() => {
+                onThemeChangeHandler({
+                  themeMode: CONST_THEME_MODES.LIGHT,
+                  setThemeMode,
+                });
+              }}
+            >
               LIGHT
             </Button>
-            <Button className="px-2 py-1 bg-surface-dark-1 text-surface-light-1">
+            <Button
+              className={`
+                px-2 py-1 bg-surface-dark-1 text-surface-light-1
+                ${
+                  themeMode === CONST_THEME_MODES.DARK
+                    ? "border-2 border-primary"
+                    : ""
+                }
+              `}
+              onClick={() => {
+                onThemeChangeHandler({
+                  themeMode: CONST_THEME_MODES.DARK,
+                  setThemeMode,
+                });
+              }}
+            >
               DARK
             </Button>
           </span>
