@@ -9,7 +9,6 @@ export interface IUsers {
   firstName: string | undefined;
   lastName: string | undefined;
   email: string | undefined;
-  settings: { [key: string]: any };
   rolesID: string | undefined;
 }
 
