@@ -10,21 +10,28 @@ import {
   useZSToggle,
   useZSRevokeTokenss,
   useZSAccessToken,
+  useZSSetProgressbarRef,
 } from "../utils/store";
 import { Button } from "./button/Button";
 import {
   utilBSGetAccessTokenDetails,
   utilBSSignOutUser,
 } from "../utils/browserStorage";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { validateTokens } from "../utils/tokenManagement";
 import Link from "next/link";
+import { IProgressbarMethods, Progressbar } from "@tmnrp/react-progressbar";
 
 //
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const isExpanded = useZSIsExpanded();
   const toggle = useZSToggle();
+
+  //
+  const progressbarRef = useRef<IProgressbarMethods>(null);
+  const setProgressbarRef = useZSSetProgressbarRef();
+  useEffect(() => setProgressbarRef(progressbarRef), [setProgressbarRef]);
 
   //
   return (
@@ -35,6 +42,12 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         h-screen
       `}
     >
+      <Progressbar
+        ref={progressbarRef}
+        className="z-20 bg-red-400 rounded-r-full"
+        frequency={100}
+        height={5}
+      />
       <Header
         className={`sticky top-0 z-10 flex justify-between py-4 pl-4 pr-2 border-b dark:border-gray-700`}
         isExpanded={isExpanded}

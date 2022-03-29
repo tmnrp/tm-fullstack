@@ -1,7 +1,7 @@
 import create from "zustand";
 import { IBreadcrumbsMethods } from "@tmnrp/react-breadcrumbs";
 import { RefObject } from "react";
-import { utilBSGetUserSettings } from "./browserStorage";
+import { IProgressbarMethods } from "@tmnrp/react-progressbar";
 
 //
 interface IGlobalState {
@@ -11,6 +11,12 @@ interface IGlobalState {
   //
   themeMode: string;
   setThemeMode: (themeMode: string) => void;
+
+  //
+  progressbarRef: React.RefObject<IProgressbarMethods> | undefined;
+  setProgressbarRef: (
+    breadcrumbRef: React.RefObject<IProgressbarMethods>
+  ) => void;
 
   //
   breadcrumbRef: React.RefObject<IBreadcrumbsMethods> | undefined;
@@ -37,6 +43,11 @@ export const useZStore = create<IGlobalState>((set: any) => {
     setThemeMode: (themeMode: string) => set(() => ({ themeMode })),
 
     //
+    progressbarRef: undefined,
+    setProgressbarRef: (progressbarRef: RefObject<IProgressbarMethods>) =>
+      set(() => ({ progressbarRef })),
+
+    //
     breadcrumbRef: undefined,
     setBreadcrumbRef: (breadcrumbRef: RefObject<IBreadcrumbsMethods>) =>
       set(() => ({ breadcrumbRef })),
@@ -55,6 +66,12 @@ export const useZSToggle = () => useZStore((state) => state.toggle);
 //
 export const useZSThemeMode = () => useZStore((state) => state.themeMode);
 export const useZSSetThemeMode = () => useZStore((state) => state.setThemeMode);
+
+//
+export const useZSProgressbarRef = () =>
+  useZStore((state) => state.progressbarRef);
+export const useZSSetProgressbarRef = () =>
+  useZStore((state) => state.setProgressbarRef);
 
 //
 export const useZSBreadcrumbRef = () =>
