@@ -21,10 +21,11 @@ import { useEffect, useRef } from "react";
 import { validateTokens } from "../utils/tokenManagement";
 import Link from "next/link";
 import { IProgressbarMethods, Progressbar } from "@tmnrp/react-progressbar";
+import { useHOCIsMounted } from "../hooks/hocIsMounted";
 
 //
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
+  const { isMounted } = useHOCIsMounted();
   const isExpanded = useZSIsExpanded();
   const toggle = useZSToggle();
 
@@ -64,10 +65,15 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           isExpandedWidth="250px"
           isExpanded={isExpanded}
         >
-          <Explorer
-            items={getExplorerContent({ router })}
-            afterOnClick={({ e, props }) => toggle()}
-          />
+          {isMounted && (
+            <Explorer
+              className="flex flex-col space-y-2"
+              items={getExplorerContent()}
+              wrapperHOC={({ cmp, url }) =>
+                url ? <Link href={url}>{cmp}</Link> : cmp
+              }
+            />
+          )}
         </Sidebar>
 
         <main className="flex-1 overflow-hidden bg-surface-light-2 dark:bg-surface-dark-2">

@@ -41,28 +41,19 @@ const _App = ({ Component, pageProps }: AppProps) => {
 export default _App;
 
 //
-export const getExplorerContent = ({
-  router,
-}: {
-  router: NextRouter;
-}): Array<IExplorerItem> => [
+export const getExplorerContent = (): Array<IExplorerItem> => [
   {
     icon: (
       <GoogleMaterialIcons className="pr-2" iconName="admin_panel_settings" />
     ),
     label: "Hateoas",
-    clickable: false,
-    itemProps: {
-      className: "pb-1.5",
-    },
+    props: { className: "flex space-x-2 mb-1" },
     items: [
       {
-        label: "Role based actions",
         icon: <GoogleMaterialIcons className="pr-2" iconName="people" />,
-        itemProps: {
-          className: "hover:text-primary cursor-pointer pb-1",
-          onClick: () => router.push(CONST_PAGES.APP.HATEOAS.PATH),
-        },
+        label: "Role based actions",
+        props: { className: "flex space-x-2 pl-4 mb-1 hover:text-primary" },
+        url: CONST_PAGES.APP.HATEOAS.PATH,
       },
     ],
   },
@@ -71,34 +62,25 @@ export const getExplorerContent = ({
       <GoogleMaterialIcons className="pr-2" iconName="admin_panel_settings" />
     ),
     label: "Manage",
-    clickable: false,
-    itemProps: {
-      className: "pb-1.5",
-    },
+    props: { className: "flex space-x-2 mb-1" },
     items: [
       {
-        label: "Roles",
         icon: <GoogleMaterialIcons className="pr-2" iconName="people" />,
-        itemProps: {
-          className: "hover:text-primary cursor-pointer pb-1",
-          onClick: () => router.push(CONST_PAGES.APP.SECURITY.ROLES.PATH),
-        },
+        label: "Roles",
+        props: { className: "flex space-x-2 pl-4 mb-1 hover:text-primary" },
+        url: CONST_PAGES.APP.SECURITY.ROLES.PATH,
       },
       {
-        label: "Users",
         icon: <GoogleMaterialIcons className="pr-2" iconName="badge" />,
-        itemProps: {
-          className: "hover:text-primary cursor-pointer pb-1",
-          onClick: () => router.push(CONST_PAGES.APP.SECURITY.USERS.PATH),
-        },
+        label: "Users",
+        props: { className: "flex space-x-2 pl-4 mb-1 hover:text-primary" },
+        url: CONST_PAGES.APP.SECURITY.USERS.PATH,
       },
       {
-        label: "Righs",
         icon: <GoogleMaterialIcons className="pr-2" iconName="checklist_rtl" />,
-        itemProps: {
-          className: "hover:text-primary cursor-pointer pb-1",
-          onClick: () => router.push(CONST_PAGES.APP.SECURITY.RIGHTS.PATH),
-        },
+        label: "Righs",
+        props: { className: "flex space-x-2 pl-4 mb-1 hover:text-primary" },
+        url: CONST_PAGES.APP.SECURITY.RIGHTS.PATH,
       },
     ],
   },

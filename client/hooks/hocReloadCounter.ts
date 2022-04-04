@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useReloadCounter = () => {
+export const useHOCReloadCounter = () => {
   const [counter, setCounter] = useState(0);
 
   //
