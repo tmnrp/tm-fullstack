@@ -34,7 +34,7 @@ interface IGlobalState {
 export const useZStore = create<IGlobalState>((set: any) => {
   //
   return {
-    isExpanded: true,
+    isExpanded: false,
     toggle: () =>
       set((state: IGlobalState) => ({ isExpanded: !state.isExpanded })),
 

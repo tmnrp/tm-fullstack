@@ -5,7 +5,6 @@ import { IExplorerItem } from "@tmnrp/react-explorer";
 import { GoogleMaterialIcons } from "@tmnrp/react-google-material-icons";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { NextRouter } from "next/router";
 import { Layout } from "../components/Layout";
 import { CONST_PAGES } from "../constants";
 import { IBreadcrumbsMethods } from "@tmnrp/react-breadcrumbs";
@@ -47,12 +46,15 @@ export const getExplorerContent = (): Array<IExplorerItem> => [
       <GoogleMaterialIcons className="pr-2" iconName="admin_panel_settings" />
     ),
     label: "Hateoas",
-    props: { className: "flex space-x-2 mb-1" },
+    props: { className: "flex space-x-2 mb-1 whitespace-nowrap" },
     items: [
       {
         icon: <GoogleMaterialIcons className="pr-2" iconName="people" />,
         label: "Role based actions",
-        props: { className: "flex space-x-2 pl-4 mb-1 hover:text-primary" },
+        props: {
+          className:
+            "flex space-x-2 pl-4 mb-1 hover:text-primary whitespace-nowrap",
+        },
         url: CONST_PAGES.APP.HATEOAS.PATH,
       },
     ],
@@ -62,24 +64,33 @@ export const getExplorerContent = (): Array<IExplorerItem> => [
       <GoogleMaterialIcons className="pr-2" iconName="admin_panel_settings" />
     ),
     label: "Manage",
-    props: { className: "flex space-x-2 mb-1" },
+    props: { className: "flex space-x-2 mb-1 whitespace-nowrap" },
     items: [
       {
         icon: <GoogleMaterialIcons className="pr-2" iconName="people" />,
         label: "Roles",
-        props: { className: "flex space-x-2 pl-4 mb-1 hover:text-primary" },
+        props: {
+          className:
+            "flex space-x-2 pl-4 mb-1 hover:text-primary whitespace-nowrap",
+        },
         url: CONST_PAGES.APP.SECURITY.ROLES.PATH,
       },
       {
         icon: <GoogleMaterialIcons className="pr-2" iconName="badge" />,
         label: "Users",
-        props: { className: "flex space-x-2 pl-4 mb-1 hover:text-primary" },
+        props: {
+          className:
+            "flex space-x-2 pl-4 mb-1 hover:text-primary whitespace-nowrap",
+        },
         url: CONST_PAGES.APP.SECURITY.USERS.PATH,
       },
       {
         icon: <GoogleMaterialIcons className="pr-2" iconName="checklist_rtl" />,
         label: "Righs",
-        props: { className: "flex space-x-2 pl-4 mb-1 hover:text-primary" },
+        props: {
+          className:
+            "flex space-x-2 pl-4 mb-1 hover:text-primary whitespace-nowrap",
+        },
         url: CONST_PAGES.APP.SECURITY.RIGHTS.PATH,
       },
     ],
