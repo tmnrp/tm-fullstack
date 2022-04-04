@@ -51,10 +51,6 @@ export const getExplorerContent = (): Array<IExplorerItem> => [
       {
         icon: <GoogleMaterialIcons className="pr-2" iconName="people" />,
         label: "Role based actions",
-        props: {
-          className:
-            "flex space-x-2 pl-4 mb-1 hover:text-primary whitespace-nowrap",
-        },
         url: CONST_PAGES.APP.HATEOAS.PATH,
       },
     ],
@@ -69,28 +65,16 @@ export const getExplorerContent = (): Array<IExplorerItem> => [
       {
         icon: <GoogleMaterialIcons className="pr-2" iconName="people" />,
         label: "Roles",
-        props: {
-          className:
-            "flex space-x-2 pl-4 mb-1 hover:text-primary whitespace-nowrap",
-        },
         url: CONST_PAGES.APP.SECURITY.ROLES.PATH,
       },
       {
         icon: <GoogleMaterialIcons className="pr-2" iconName="badge" />,
         label: "Users",
-        props: {
-          className:
-            "flex space-x-2 pl-4 mb-1 hover:text-primary whitespace-nowrap",
-        },
         url: CONST_PAGES.APP.SECURITY.USERS.PATH,
       },
       {
         icon: <GoogleMaterialIcons className="pr-2" iconName="checklist_rtl" />,
         label: "Righs",
-        props: {
-          className:
-            "flex space-x-2 pl-4 mb-1 hover:text-primary whitespace-nowrap",
-        },
         url: CONST_PAGES.APP.SECURITY.RIGHTS.PATH,
       },
     ],

@@ -67,11 +67,16 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         >
           {isMounted && (
             <Explorer
-              className="flex flex-col space-y-2"
+              className="flex flex-col space-y-2 pl-4"
               items={getExplorerContent()}
               wrapperHOC={({ cmp, url }) =>
                 url ? <Link href={url}>{cmp}</Link> : cmp
               }
+              commonItemProps={{
+                className:
+                  "flex space-x-2 mb-1 hover:text-primary whitespace-nowrap",
+                onClick: toggle,
+              }}
             />
           )}
         </Sidebar>
