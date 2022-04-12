@@ -17,14 +17,14 @@ import {
   utilBSGetAccessTokenDetails,
   utilBSSignOutUser,
 } from "../utils/browserStorage";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
 import { IProgressbarMethods, Progressbar } from "@tmnrp/react-progressbar";
-import { useHOCIsMounted } from "../hooks/hocIsMounted";
+import { useIsMounted } from "../hooks/useIsMounted";
 
 //
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { isMounted } = useHOCIsMounted();
+  const { isMounted } = useIsMounted();
   const isExpanded = useZSIsExpanded();
   const accessToken = useZSAccessToken();
   const toggle = useZSToggle();
@@ -33,6 +33,19 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const progressbarRef = useRef<IProgressbarMethods>(null);
   const setProgressbarRef = useZSSetProgressbarRef();
   useEffect(() => setProgressbarRef(progressbarRef), [setProgressbarRef]);
+
+  //
+  const toggleSidebarByKey = useCallback(
+    (e: KeyboardEvent) => {
+      isMounted && accessToken && e.ctrlKey && e.key === "b" && toggle();
+    },
+    [isMounted, accessToken, toggle]
+  );
+  useEffect(() => {
+    isMounted &&
+      accessToken &&
+      document.addEventListener("keydown", toggleSidebarByKey);
+  }, [isMounted, accessToken, toggleSidebarByKey]);
 
   //
   return (
